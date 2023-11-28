@@ -1,4 +1,4 @@
-# Ekan Beneficiary
+# Ekan Exame Beneficiário
 
 O projeto foi gerado na versão 17.0.0.
 Antes de rodar o servidor de desenvolvimento, baixar as dependencias do projeto.
