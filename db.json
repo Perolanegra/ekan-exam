@@ -1,0 +1,93 @@
+{
+  "list": {
+    "results": [
+      {
+        "id": "b1",
+        "name": "Igor",
+        "phone": 619820803693,
+        "birthDate": "25/08/1958",
+        "addedDate": "18/09/2023",
+        "updateDate": "20/10/2023",
+        "documents": [
+          {
+            "id": "doc-igor1",
+            "documentType": "Tipo do documento",
+            "desc": "descricao documento",
+            "addedDate": "15/03/2023",
+            "updatedDate": "02/09/2023"
+          }
+        ]
+      },
+      {
+        "id": "b2",
+        "name": "Felipe",
+        "phone": 71982457421,
+        "birthDate": "30/09/1967",
+        "addedDate": "15/03/2023",
+        "updateDate": "05/08/2023",
+        "documents": [
+          {
+            "id": "doc-felipe1",
+            "documentType": "Tipo do documento1",
+            "desc": "descricao documento1",
+            "addedDate": "12/01/2023",
+            "updatedDate": "02/09/2023"
+          },
+          {
+            "id": "doc-felipe2",
+            "documentType": "Tipo do documento2",
+            "desc": "descricao documento2",
+            "addedDate": "14/11/2023",
+            "updatedDate": "02/09/2023"
+          },
+          {
+            "id": "doc-felipe3",
+            "documentType": "Tipo do documento3",
+            "desc": "descricao documento3",
+            "addedDate": "10/04/2023",
+            "updatedDate": "02/09/2023"
+          }
+        ]
+      }
+    ]
+  },
+  "update": {
+    "id": "b1",
+    "name": "Igor",
+    "phone": 71982547145,
+    "birthDate": "20/05/2023",
+    "addedDate": "15/03/2023",
+    "updateDate": "05/08/2023",
+    "documents": [
+      {
+        "id": "doc-igor1",
+        "documentType": "Tipo do documento",
+        "desc": "descricao documento",
+        "addedDate": "15/03/2023",
+        "updatedDate": "02/09/2023"
+      }
+    ]
+  },
+  "create": {
+    "id": "b2",
+    "name": "Felipe",
+    "phone": 71994741230,
+    "birthDate": "20/05/2023",
+    "addedDate": "15/03/2023",
+    "updateDate": "05/08/2023",
+    "documents": [
+      {
+        "id": "doc-felipe1",
+        "documentType": "Tipo do documento1",
+        "desc": "descricao documento1",
+        "addedDate": "15/03/2023",
+        "updatedDate": "02/09/2023"
+      }
+    ]
+  },
+  "remove": {
+    "success": true,
+    "name": "Felipe",
+    "id": "b1"
+  }
+}

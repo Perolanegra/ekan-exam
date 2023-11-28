@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class='card-body'
+       *ngIf="beneficiaries()?.length">
+
+    <div class="list-group">
+      <button type="button"
+              class="list-group-item"
+              *ngFor="let b of beneficiaries()"
+              [ngClass]="{'active': b?.name === selectedBeneficiary()?.name}"
+              (click)="onSelected(b?.id)">
+        {{ b.name }}
+      </button>
+    </div>
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">
+    {{errorMessage }}
+  </div>
+</div>

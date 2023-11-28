@@ -1,0 +1,9 @@
+.show {
+  display: unset;
+  opacity: 1;
+}
+
+.hide {
+  display: none;
+  opacity: 0;
+}

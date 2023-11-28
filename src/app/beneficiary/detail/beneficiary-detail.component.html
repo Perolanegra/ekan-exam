@@ -1,0 +1,48 @@
+<div class="card" *ngIf="selectedBeneficiary()">
+  <div class="card-header">
+    {{ pageTitle() }}
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3">Nome:</div>
+      <div class="col-md-6">{{ selectedBeneficiary()?.name }}</div>
+      <div class="col-md-3">
+        <button class="btn btn-primary" (click)="showModal.set(!showModal())">
+          Atualizar
+        </button>
+      </div>
+    </div>
+    <div class="row mt-1 mb-1">
+      <div class="col-md-3">Telefone:</div>
+      <div class="col-md-6 ">{{ selectedBeneficiary()?.phone }}</div>
+    </div>
+    <div class="row mt-1 mb-1">
+      <div class="col-md-3">Nascimento:</div>
+      <div class="col-md-6">{{ selectedBeneficiary()?.birthDate }}</div>
+    </div>
+    <div class="row mt-1 mb-1">
+      <div class="col-md-3">Inclusão em:</div>
+      <div class="col-md-6">{{ selectedBeneficiary()?.addedDate }}</div>
+    </div>
+    <div class="row mt-1 mb-1">
+      <div class="col-md-3">Atualizado em:</div>
+      <div class="col-md-6">{{ selectedBeneficiary()?.updateDate }}</div>
+    </div>
+
+    <div class="row mt-2 mb-1" *ngIf="beneficiaryDocuments()">
+      <div class="col-md-3">Documentos:</div>
+      <div class="col-md-6 box-docs">
+        <ul class="list-group mt-1 mb-1" *ngFor="let document of beneficiaryDocuments()">
+          <li class="list-group-item">{{ document.id }}</li>
+          <li class="list-group-item">{{ document.desc }}</li>
+          <li class="list-group-item">{{ document.documentType }}</li>
+          <li class="list-group-item">{{ document.addedDate }}</li>
+          <li class="list-group-item">{{ document.updatedDate }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <app-dialog [isActive]="showModal"></app-dialog>
