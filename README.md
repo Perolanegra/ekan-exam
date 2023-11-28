@@ -15,7 +15,8 @@ Para subir o servidor de desenvolvimento rode o seguinte comando `npm run start`
 
 ## Build
 
-Para rodar o build execute o seguinte comando `npm run build` e depois navegue para dentro da pasta `dist/ek-beneficiary` para checar os artefatos gerados.
+Para rodar o build execute o seguinte comando `npm run build` e depois navegue para dentro da pasta 
+`dist/ek-beneficiary` para checar os artefatos gerados.
 
 ## Testes Unitários
 
