@@ -29,5 +29,5 @@ combinado de programação reativa utilizando o RXJS para chamadas HTTP.
 Como se trata de um simples CRUD, não foi separado as camadas de services para lógicas de component e chamadas HTTP,
 logo tudo foi englobado em um único service modular com instância simulando um "singleton".
 
-Foi utilizado a biblioteca do bootstrap para uma simples demonstração em virtude da criação de estilos de acordo com seu design system por motivos de fácil manipulação e "baixa escalabilidade".
+Foi utilizado a biblioteca do bootstrap para uma simples demonstração em virtude da criação de estilos de acordo com seu design system por motivos de fácil manipulação e "baixa escalabilidade". <br/>
 *Dentre outras que não estão presentes aqui (Angular Material, Material Design, PrimeNG, até mesmo Tailwind CSS UI Kit)*

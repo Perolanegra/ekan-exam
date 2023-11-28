@@ -14,7 +14,12 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
       flex-direction: column;
       overflow-y: auto;
       height: 400px;
-    }`
+    }
+
+    li span {
+      text-decoration: underline;
+    }
+    `
   ]
 })
 export class BeneficiaryDetailComponent {
@@ -25,8 +30,7 @@ export class BeneficiaryDetailComponent {
   // Signals used in the template
   selectedBeneficiary = this.beneficiaryService.selectedbeneficiary;
   beneficiaryDocuments = this.beneficiaryService.beneficiaryDocuments;
+  inputControls = this.beneficiaryService.inputControlsBeneficiary;
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
 
-  updateBenficiary() {
-  }
 }

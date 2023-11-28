@@ -1,11 +1,12 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
+import { InputControls } from './model/controls';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, NgFor, NgIf],
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
@@ -15,11 +16,17 @@ export class DialogComponent implements OnInit {
   @Input()
   isActive = signal(false);
 
+  @Input()
+  controls = signal<InputControls[]>([]);
+
+  @Input()
+  beneficiary: string | undefined;
+
   ngOnInit() {
   }
 
   submit() {
-    
+
   }
 
 }

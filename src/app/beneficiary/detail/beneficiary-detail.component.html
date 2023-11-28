@@ -15,7 +15,7 @@
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Telefone:</div>
-      <div class="col-md-6 ">{{ selectedBeneficiary()?.phone }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary()?.phone }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Nascimento:</div>
@@ -33,16 +33,27 @@
     <div class="row mt-2 mb-1" *ngIf="beneficiaryDocuments()">
       <div class="col-md-3">Documentos:</div>
       <div class="col-md-6 box-docs">
-        <ul class="list-group mt-1 mb-1" *ngFor="let document of beneficiaryDocuments()">
-          <li class="list-group-item">{{ document.id }}</li>
-          <li class="list-group-item">{{ document.desc }}</li>
-          <li class="list-group-item">{{ document.documentType }}</li>
-          <li class="list-group-item">{{ document.addedDate }}</li>
-          <li class="list-group-item">{{ document.updatedDate }}</li>
+        <ul
+          class="list-group mt-1 mb-1"
+          *ngFor="let document of beneficiaryDocuments()"
+        >
+          <li class="list-group-item"><span>ID</span>: {{ document.id }}</li>
+          <li class="list-group-item">
+            <span>Descrição</span>: {{ document.desc }}
+          </li>
+          <li class="list-group-item">
+            <span>Tipo</span>: {{ document.documentType }}
+          </li>
+          <li class="list-group-item">
+            <span>Inclusão em</span>: {{ document.addedDate }}
+          </li>
+          <li class="list-group-item">
+            <span>Atualizado em</span>: {{ document.updatedDate }}
+          </li>
         </ul>
       </div>
     </div>
   </div>
 </div>
 
-  <app-dialog [isActive]="showModal"></app-dialog>
+<app-dialog [isActive]="showModal" [controls]="inputControls" [beneficiary]="selectedBeneficiary()?.name"></app-dialog>

@@ -12,6 +12,7 @@ import {
 } from 'rxjs';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { Document, Beneficiary, BeneficiaryResponse } from './model/beneficiary';
+import { InputControls } from '../shared/dialog/model/controls';
 
 @Injectable({
   providedIn: 'root'
@@ -94,4 +95,41 @@ export class BeneficiaryService {
     console.error(errorMessage);
     return throwError(() => errorMessage);
   }
+
+
+  inputControlsBeneficiary = signal<InputControls[]>(
+    [
+      {
+        type: 'text',
+        id: 'name',
+        className: '',
+        label: 'Nome',
+      },
+      {
+        type: 'text',
+        id: 'phone',
+        className: '',
+        label: 'Telefone',
+      },
+      {
+        type: 'date',
+        id: 'birthDate',
+        className: '',
+        label: 'Nascimento',
+      },
+      {
+        type: 'date',
+        id: 'addedDate',
+        className: '',
+        label: 'Inclusão',
+      },
+      {
+        type: 'date',
+        id: 'updatedDate',
+        className: '',
+        label: 'Atualizado em',
+      },
+    ]
+  )
+
 }
