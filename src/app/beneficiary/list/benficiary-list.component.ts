@@ -26,7 +26,7 @@ export class BeneficiaryListComponent {
   selectedBeneficiary = this.bService.selectedbeneficiary;
   // When a beneficiary is selected, emit the selected beneficiary name
   onSelected(bID: string | undefined): void {
-    this.bService.beneficiarySelected(bID);
+    this.bService.beneficiarySelected(bID as string);
   }
 
 }

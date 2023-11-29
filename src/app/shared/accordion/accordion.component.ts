@@ -21,8 +21,8 @@ export class AccordionComponent implements OnInit {
 
   toggleAccordion(elementIdRef: string) {
     const elementRef = document.querySelector(elementIdRef);
-    // since im not in directive, this wont work.
 
+    // since im not in directive, this wont work.
     // let elementBtn = document.querySelector('.accordion-button');
     // this.renderer.setProperty(elementBtn, '--bs-accordion-btn-icon-transform', 'rotate(-360deg)')
     if (!this.hideAccordion()) {

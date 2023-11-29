@@ -6,7 +6,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-3">Nome:</div>
-      <div class="col-md-6">{{ selectedBeneficiary()?.name }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().name }}</div>
       <div class="col-md-3">
         <button class="btn btn-primary" (click)="showModal.set(!showModal())">
           Atualizar
@@ -15,19 +15,19 @@
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Telefone:</div>
-      <div class="col-md-6">{{ selectedBeneficiary()?.phone }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().phone }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Nascimento:</div>
-      <div class="col-md-6">{{ selectedBeneficiary()?.birthDate }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().birthDate }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Inclusão em:</div>
-      <div class="col-md-6">{{ selectedBeneficiary()?.addedDate }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().addedDate }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Atualizado em:</div>
-      <div class="col-md-6">{{ selectedBeneficiary()?.updateDate }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().updateDate }}</div>
     </div>
 
     <div class="row mt-2 mb-1" *ngIf="beneficiaryDocuments()">
@@ -56,6 +56,6 @@
   </div>
 </div>
 
-<app-dialog [isActive]="showModal" [controls]="inputControls" [beneficiary]="selectedBeneficiary()?.name">
+<app-dialog [isActive]="showModal" [controls]="inputControls" [beneficiary]="selectedBeneficiary">
   <app-accordion></app-accordion>
 </app-dialog>

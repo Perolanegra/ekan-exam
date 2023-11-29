@@ -10,7 +10,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Atualização Beneficiário: {{ beneficiary }}</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Atualização Beneficiário: {{ beneficiary().name }}</h5>
       </div>
       <div class="modal-body">
         <form>
@@ -19,10 +19,12 @@
               >{{ item?.label }}:</label
             >
             <input
+              #myInput
               *ngIf="item.type !== 'textarea'; else myTextArea"
               [type]="item?.type"
               class="form-control"
               [id]="item?.id"
+              value="{{ beneficiary()[item.id] }}"
             />
 
             <ng-template #myTextArea>

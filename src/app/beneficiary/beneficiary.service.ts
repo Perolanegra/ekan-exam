@@ -31,7 +31,7 @@ export class BeneficiaryService {
 
   // Expose signals from this service with toSignal method that transforms observables into signals.
   beneficiarys = toSignal(this.beneficiarys$, { initialValue: [] as Beneficiary[] });
-  selectedbeneficiary = signal<Beneficiary | undefined>(undefined);
+  selectedbeneficiary = signal<Beneficiary>({} as Beneficiary);
 
   private beneficiaryDocuments$ = toObservable(this.selectedbeneficiary).pipe(
     filter(Boolean),
@@ -40,10 +40,10 @@ export class BeneficiaryService {
 
   beneficiaryDocuments = toSignal<Document[], Document[]>(this.beneficiaryDocuments$, { initialValue: [] });
 
-  beneficiarySelected(bId: string | undefined) {
+  beneficiarySelected(bId: string) {
     if (bId) {
       const foundbeneficiary = this.beneficiarys().find((b) => b.id === bId);
-      this.selectedbeneficiary.set(foundbeneficiary);
+      this.selectedbeneficiary.set(foundbeneficiary ? foundbeneficiary : {} as Beneficiary);
     }
   }
 
@@ -125,7 +125,7 @@ export class BeneficiaryService {
       },
       {
         type: 'date',
-        id: 'updatedDate',
+        id: 'updateDate',
         className: '',
         label: 'Atualizado em',
       },

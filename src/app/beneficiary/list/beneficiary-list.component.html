@@ -10,8 +10,8 @@
       <button type="button"
               class="list-group-item"
               *ngFor="let b of beneficiaries()"
-              [ngClass]="{'active': b?.name === selectedBeneficiary()?.name}"
-              (click)="onSelected(b?.id)">
+              [ngClass]="{'active': b?.name === selectedBeneficiary().name}"
+              (click)="onSelected(b.id)">
         {{ b.name }}
       </button>
     </div>
