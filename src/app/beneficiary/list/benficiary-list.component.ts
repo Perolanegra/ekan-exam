@@ -6,7 +6,29 @@ import { BeneficiaryService } from '../beneficiary.service';
   selector: 'beneficiary-list',
   standalone: true,
   imports: [NgClass, NgFor, NgIf],
-  templateUrl: './beneficiary-list.component.html'
+  templateUrl: './beneficiary-list.component.html',
+  styles: [
+    `
+      .own-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .card-header::after {
+        content: url("../svg/add-beneficiary.svg");
+        cursor: pointer;
+        padding: 4px 8px;
+        background: #0d6efd;
+        border-radius: 4px;
+      }
+
+      .own-header::after:hover {
+        background: blue;
+      }
+
+    `
+  ]
 })
 export class BeneficiaryListComponent {
   pageTitle = 'Beneficiários';
@@ -18,7 +40,7 @@ export class BeneficiaryListComponent {
     try {
       return this.bService.beneficiarys()
     } catch (e) {
-      this.errorMessage = typeof e === 'string'? e : 'Error';
+      this.errorMessage = typeof e === 'string' ? e : 'Error';
       return [];
     }
   });
