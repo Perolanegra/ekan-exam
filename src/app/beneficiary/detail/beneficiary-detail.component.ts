@@ -27,6 +27,7 @@ export class BeneficiaryDetailComponent {
   errorMessage = '';
   beneficiaryService = inject(BeneficiaryService);
   showModal = signal(false);
+  hideAccordion = signal(true);
 
   // Signals used in the template
   selectedBeneficiary = this.beneficiaryService.selectedbeneficiary;

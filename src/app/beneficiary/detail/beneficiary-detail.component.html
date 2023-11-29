@@ -8,7 +8,7 @@
       <div class="col-md-3">Nome:</div>
       <div class="col-md-6">{{ selectedBeneficiary().name }}</div>
       <div class="col-md-3">
-        <button class="btn btn-primary" (click)="showModal.set(!showModal());">
+        <button class="btn btn-primary" (click)="hideAccordion.set(true); showModal.set(!showModal()); ">
           Atualizar
         </button>
       </div>
@@ -64,5 +64,6 @@
   <app-accordion
     [controlsDoc]="controlsDoc"
     [documents]="selectedBeneficiary().documents"
+    [hideAccordion]="hideAccordion"
   ></app-accordion>
 </app-dialog>

@@ -4,7 +4,7 @@
 
 .hideEase {
   animation: fadeOut .45s ease;
-  animation-fill-mode: forwards;
+  /* animation-fill-mode: forwards; */
 }
 
 .hideAccordion {

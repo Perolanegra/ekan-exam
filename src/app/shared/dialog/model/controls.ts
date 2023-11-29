@@ -8,5 +8,5 @@ export interface InputControls {
 }
 
 export interface InputControlDocuments extends Omit<InputControls, 'id'> {
-  idDoc: keyof Document
+  idDoc: keyof Document;
 }

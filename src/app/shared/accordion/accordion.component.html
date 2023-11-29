@@ -6,9 +6,9 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button
-        (click)="
-          hideAccordion.set(!hideAccordion()); toggleAccordion(docItem.id)
-        "
+        #btnAccordeon
+        [id]="docItem.id + '-id'"
+        (click)="toggleAccordion(docItem)"
         class="accordion-button"
         [ngClass]="docItem.id"
         type="button"

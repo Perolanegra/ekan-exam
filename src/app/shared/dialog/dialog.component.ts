@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, WritableSignal, signal } from '@angular/core';
 import { InputControls } from './model/controls';
 import { Beneficiary } from '../../beneficiary/model/beneficiary';
 
@@ -10,7 +10,7 @@ import { Beneficiary } from '../../beneficiary/model/beneficiary';
   imports: [NgClass, NgFor, NgIf],
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements OnInit {
+export class DialogComponent {
 
   constructor() { }
 
@@ -23,9 +23,16 @@ export class DialogComponent implements OnInit {
   @Input()
   beneficiary!: WritableSignal<Beneficiary>;
 
-  ngOnInit() {
+  @Input()
+  addBeneficiaryMode: boolean = false;
+
+  addDoc(): void {
+    console.log('add doc method works!');
   }
 
+  hideAccordion() {
+    
+  }
 
   submit() {
 

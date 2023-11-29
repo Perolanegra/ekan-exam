@@ -1,11 +1,13 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { AccordionComponent } from '../../shared/accordion/accordion.component';
 
 @Component({
   selector: 'beneficiary-list',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf],
+  imports: [NgClass, NgFor, NgIf, DialogComponent, AccordionComponent],
   templateUrl: './beneficiary-list.component.html',
   styles: [
     `
@@ -23,8 +25,13 @@ import { BeneficiaryService } from '../beneficiary.service';
         border-radius: 4px;
       }
 
-      .own-header::after:hover {
-        background: blue;
+      .pseudo-clicker {
+        position: absolute;
+        right: 3.5%;
+        flex-direction: column;
+        align-items: end;
+        padding: 20px;
+        cursor: pointer;
       }
 
     `
@@ -34,6 +41,12 @@ export class BeneficiaryListComponent {
   pageTitle = 'Beneficiários';
   errorMessage = '';
   bService = inject(BeneficiaryService);
+  showModalAdd = signal(false);
+  hideAccordion = signal(true);
+
+  controlsDoc = this.bService.inputControlsDocs;
+  selectedBeneficiary = this.bService.selectedbeneficiary;
+  inputControls = this.bService.inputControlsBeneficiary;
 
   // Component signals
   beneficiaries = computed(() => {
@@ -45,7 +58,6 @@ export class BeneficiaryListComponent {
     }
   });
 
-  selectedBeneficiary = this.bService.selectedbeneficiary;
   // When a beneficiary is selected, emit the selected beneficiary name
   onSelected(bID: string | undefined): void {
     this.bService.beneficiarySelected(bID as string);
