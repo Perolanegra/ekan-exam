@@ -57,5 +57,5 @@
 </div>
 
 <app-dialog [isActive]="showModal" [controls]="inputControls" [beneficiary]="selectedBeneficiary">
-  <app-accordion></app-accordion>
+  <app-accordion [controlsDoc]="controlsDoc" [documents]="selectedBeneficiary().documents"></app-accordion>
 </app-dialog>

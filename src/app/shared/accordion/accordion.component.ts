@@ -1,11 +1,12 @@
-import { NgClass } from '@angular/common';
-import { Component, OnInit, signal, inject, Renderer2 } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, signal, inject, Renderer2, Input, WritableSignal } from '@angular/core';
+import { Document } from '../../beneficiary/model/beneficiary';
 
 @Component({
   selector: 'app-accordion',
   templateUrl: './accordion.component.html',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, NgFor, NgIf],
   styleUrls: ['./accordion.component.css']
 })
 export class AccordionComponent implements OnInit {
@@ -16,13 +17,46 @@ export class AccordionComponent implements OnInit {
 
   hideAccordion = signal(true);
 
+  @Input()
+  controlsDoc!: WritableSignal<any>;
+
+  @Input()
+  documents!: Document[];
+
+  // = signal([
+  //   {
+  //     type: 'text',
+  //     idDoc: 'documentType',
+  //     className: '',
+  //     label: 'Tipo',
+  //   },
+  //   {
+  //     type: 'text',
+  //     idDoc: 'desc',
+  //     className: '',
+  //     label: 'Descrição',
+  //   },
+  //   {
+  //     type: 'date',
+  //     idDoc: 'desc',
+  //     className: '',
+  //     label: 'Data Inclusão',
+  //   },
+  //   {
+  //     type: 'date',
+  //     idDoc: 'desc',
+  //     className: '',
+  //     label: 'Data Atualização',
+  //   },
+  // ]);
+
+
   ngOnInit() {
   }
 
   toggleAccordion(elementIdRef: string) {
-    const elementRef = document.querySelector(elementIdRef);
-
-    // since im not in directive, this wont work.
+    const elementRef = document.querySelector(`#${elementIdRef}`);
+    // since im not in directive, then this below wont work.
     // let elementBtn = document.querySelector('.accordion-button');
     // this.renderer.setProperty(elementBtn, '--bs-accordion-btn-icon-transform', 'rotate(-360deg)')
     if (!this.hideAccordion()) {

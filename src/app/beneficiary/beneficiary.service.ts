@@ -132,4 +132,33 @@ export class BeneficiaryService {
     ]
   )
 
+  inputControlsDocs = signal<Partial<InputControls>[]>(
+    [
+      {
+        type: 'text',
+        idDoc: 'documentType',
+        className: '',
+        label: 'Tipo',
+      },
+      {
+        type: 'text',
+        idDoc: 'desc',
+        className: '',
+        label: 'Descrição',
+      },
+      {
+        type: 'date',
+        idDoc: 'addedDate',
+        className: '',
+        label: 'Data Inclusão',
+      },
+      {
+        type: 'date',
+        idDoc: 'updatedDate',
+        className: '',
+        label: 'Data Atualização',
+      },
+    ]
+  )
+
 }

@@ -32,6 +32,8 @@ export class BeneficiaryDetailComponent {
   selectedBeneficiary = this.beneficiaryService.selectedbeneficiary;
   beneficiaryDocuments = this.beneficiaryService.beneficiaryDocuments;
   inputControls = this.beneficiaryService.inputControlsBeneficiary;
+  controlsDoc = this.beneficiaryService.inputControlsDocs;
+  
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
 
 }

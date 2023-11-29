@@ -13,6 +13,15 @@
   display: none;
 }
 
+.accordion-body {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.accordion-body:last-child {
+  padding-bottom: 25px;;
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;

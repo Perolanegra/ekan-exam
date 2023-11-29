@@ -1,8 +1,10 @@
-<div class="accordion" id="accordionExample">
+<div *ngFor="let docItem of documents; let i = index" class="accordion mt-2 mb-2" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button
-        (click)="hideAccordion.set(!hideAccordion()); toggleAccordion('#collapseOne')"
+        (click)="
+          hideAccordion.set(!hideAccordion()); toggleAccordion(docItem.id)
+        "
         class="accordion-button"
         type="button"
         data-bs-toggle="collapse"
@@ -10,24 +12,36 @@
         aria-expanded="true"
         aria-controls="collapseOne"
       >
-        Accordion Item #1
+        Documento: {{ i + 1}}
       </button>
     </h2>
 
     <div
-      id="collapseOne"
+      [id]="docItem.id"
       class="accordion-collapse hideAccordion"
       aria-labelledby="headingOne"
       data-bs-parent="#accordionExample"
     >
-      <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> It is shown by
-        default, until the collapse plugin adds the appropriate classes that we
-        use to style each element. These classes control the overall appearance,
-        as well as the showing and hiding via CSS transitions. You can modify
-        any of this with custom CSS or overriding our default variables. It's
-        also worth noting that just about any HTML can go within the
-        <code>.accordion-body</code>, though the transition does limit overflow.
+      <div *ngFor="let item of controlsDoc(); let i = index" class="accordion-body">
+        <label for="recipient-name" class="col-form-label"
+          >{{ item?.label }}:</label
+        >
+
+        <input
+          *ngIf="item.type !== 'textarea'; else docTextArea"
+          [type]="item?.type"
+          class="form-control"
+          [id]="item?.idDoc"
+          value="{{ docItem['documentType'] }}"
+        /> <!--fazer funcionar o value dinamicamente, criando outro objeto do InputControls no service, extendendo algumas props em comum do obj ja existente-->
+
+        <ng-template #docTextArea>
+          <textarea
+            class="form-control"
+            [className]="item?.className"
+            [id]="item?.idDoc"
+          ></textarea>
+        </ng-template>
       </div>
     </div>
   </div>
