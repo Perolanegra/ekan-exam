@@ -2,11 +2,12 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { DecimalPipe, NgFor, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { AccordionComponent } from '../../shared/accordion/accordion.component';
 
 @Component({
   selector: 'beneficiary-detail',
   standalone: true,
-  imports: [NgFor, NgIf, DecimalPipe, DialogComponent],
+  imports: [NgFor, NgIf, DecimalPipe, DialogComponent, AccordionComponent],
   templateUrl: './beneficiary-detail.component.html',
   styles: [
     `.box-docs {

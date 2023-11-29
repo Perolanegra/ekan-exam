@@ -1,9 +1,18 @@
-.show {
+.showDialog {
   display: unset;
   opacity: 1;
 }
 
-.hide {
+.hideDialog {
   display: none;
   opacity: 0;
+}
+
+.modal.fade .modal-dialog {
+  transform: unset;
+}
+
+.modal-content {
+  height: 85dvh;
+  overflow-y: auto;
 }

@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { InputControls } from './model/controls';
 
 @Component({
@@ -7,6 +7,7 @@ import { InputControls } from './model/controls';
   templateUrl: './dialog.component.html',
   standalone: true,
   imports: [NgClass, NgFor, NgIf],
+  // encapsulation: ViewEncapsulation.Emulated,
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {

@@ -90,7 +90,7 @@ export class BeneficiaryService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      errorMessage = `Servidor retornou o código: ${err.status}, O erro é: ${err.message}`;
+      errorMessage = `Servidor retornou o código: ${err.status}, A mensagem é: ${err.message}`;
     }
     console.error(errorMessage);
     return throwError(() => errorMessage);
