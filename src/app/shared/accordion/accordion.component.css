@@ -19,7 +19,12 @@
 }
 
 .accordion-body:last-child {
-  padding-bottom: 25px;;
+  padding-bottom: 25px;
+}
+
+.funcionar {
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 @-webkit-keyframes fadeIn {

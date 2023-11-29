@@ -5,5 +5,8 @@ export interface InputControls {
   id: keyof Beneficiary;
   className: string;
   label: string;
-  idDoc?: keyof Document; // probably have to change
+}
+
+export interface InputControlDocuments extends Omit<InputControls, 'id'> {
+  idDoc: keyof Document
 }

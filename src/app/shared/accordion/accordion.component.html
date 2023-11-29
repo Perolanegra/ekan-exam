@@ -1,4 +1,8 @@
-<div *ngFor="let docItem of documents; let i = index" class="accordion mt-2 mb-2" id="accordionExample">
+<div
+  *ngFor="let docItem of documents; let i = index"
+  class="accordion mt-2 mb-2"
+  id="accordionExample"
+>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button
@@ -6,13 +10,14 @@
           hideAccordion.set(!hideAccordion()); toggleAccordion(docItem.id)
         "
         class="accordion-button"
+        [ngClass]="docItem.id"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseOne"
         aria-expanded="true"
         aria-controls="collapseOne"
       >
-        Documento: {{ i + 1}}
+        Documento: {{ i + 1 }}
       </button>
     </h2>
 
@@ -22,7 +27,10 @@
       aria-labelledby="headingOne"
       data-bs-parent="#accordionExample"
     >
-      <div *ngFor="let item of controlsDoc(); let i = index" class="accordion-body">
+      <div
+        *ngFor="let item of controlsDoc(); let i = index"
+        class="accordion-body"
+      >
         <label for="recipient-name" class="col-form-label"
           >{{ item?.label }}:</label
         >
@@ -32,8 +40,8 @@
           [type]="item?.type"
           class="form-control"
           [id]="item?.idDoc"
-          value="{{ docItem['documentType'] }}"
-        /> <!--fazer funcionar o value dinamicamente, criando outro objeto do InputControls no service, extendendo algumas props em comum do obj ja existente-->
+          value="{{ docItem[item.idDoc] }}"
+        />
 
         <ng-template #docTextArea>
           <textarea

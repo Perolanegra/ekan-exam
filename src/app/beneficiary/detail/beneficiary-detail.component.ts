@@ -33,7 +33,7 @@ export class BeneficiaryDetailComponent {
   beneficiaryDocuments = this.beneficiaryService.beneficiaryDocuments;
   inputControls = this.beneficiaryService.inputControlsBeneficiary;
   controlsDoc = this.beneficiaryService.inputControlsDocs;
-  
+
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
 
 }

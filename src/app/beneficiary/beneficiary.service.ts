@@ -12,7 +12,7 @@ import {
 } from 'rxjs';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { Document, Beneficiary, BeneficiaryResponse } from './model/beneficiary';
-import { InputControls } from '../shared/dialog/model/controls';
+import { InputControls, InputControlDocuments } from '../shared/dialog/model/controls';
 
 @Injectable({
   providedIn: 'root'
@@ -132,7 +132,7 @@ export class BeneficiaryService {
     ]
   )
 
-  inputControlsDocs = signal<Partial<InputControls>[]>(
+  inputControlsDocs = signal<InputControlDocuments[]>(
     [
       {
         type: 'text',

@@ -8,7 +8,7 @@
       <div class="col-md-3">Nome:</div>
       <div class="col-md-6">{{ selectedBeneficiary().name }}</div>
       <div class="col-md-3">
-        <button class="btn btn-primary" (click)="showModal.set(!showModal())">
+        <button class="btn btn-primary" (click)="showModal.set(!showModal());">
           Atualizar
         </button>
       </div>
@@ -56,6 +56,13 @@
   </div>
 </div>
 
-<app-dialog [isActive]="showModal" [controls]="inputControls" [beneficiary]="selectedBeneficiary">
-  <app-accordion [controlsDoc]="controlsDoc" [documents]="selectedBeneficiary().documents"></app-accordion>
+<app-dialog
+  [isActive]="showModal"
+  [controls]="inputControls"
+  [beneficiary]="selectedBeneficiary"
+>
+  <app-accordion
+    [controlsDoc]="controlsDoc"
+    [documents]="selectedBeneficiary().documents"
+  ></app-accordion>
 </app-dialog>
