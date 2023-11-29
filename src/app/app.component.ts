@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { BeneficiaryService } from './beneficiary/beneficiary.service';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
@@ -11,4 +12,5 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   pageTitle = 'Avaliação EKAN';
+  bService = inject(BeneficiaryService);
 }

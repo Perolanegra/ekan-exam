@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BeneficiaryListComponent } from "../list/benficiary-list.component";
 import { BeneficiaryDetailComponent } from "../detail/beneficiary-detail.component";
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'beneficiary-shell',
@@ -15,7 +16,7 @@ import { BeneficiaryDetailComponent } from "../detail/beneficiary-detail.compone
     </div>
 </div>
   `,
-  imports: [BeneficiaryListComponent, BeneficiaryDetailComponent]
+  imports: [BeneficiaryListComponent, BeneficiaryDetailComponent, NgIf]
 })
 export class BeneficiaryShellComponent {
 
