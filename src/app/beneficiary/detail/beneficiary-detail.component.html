@@ -19,15 +19,15 @@
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Nascimento:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().birthDate }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().birthDate | date : 'short' : '' : 'pt-BR' }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Inclusão em:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().addedDate }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().addedDate | date : 'short' : '' : 'pt-BR' }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Atualizado em:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().updateDate }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().updateDate | date : 'short' : '' : 'pt-BR' }}</div>
     </div>
 
     <div class="row mt-2 mb-1" *ngIf="beneficiaryDocuments()">
@@ -45,10 +45,10 @@
             <span>Tipo</span>: {{ document.documentType }}
           </li>
           <li class="list-group-item">
-            <span>Inclusão em</span>: {{ document.addedDate }}
+            <span>Inclusão em</span>: {{ (document.addedDate | date : 'short' : 'pt-BR')?.substr(0, 10) }}
           </li>
           <li class="list-group-item">
-            <span>Atualizado em</span>: {{ document.updatedDate }}
+            <span>Atualizado em</span>: {{ (document.updatedDate | date : 'short' : 'pt-BR')?.substr(0, 10) }}
           </li>
         </ul>
       </div>

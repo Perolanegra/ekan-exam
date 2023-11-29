@@ -141,7 +141,7 @@ export class BeneficiaryService {
         label: 'Tipo',
       },
       {
-        type: 'text',
+        type: 'textarea',
         idDoc: 'desc',
         className: '',
         label: 'Descrição',

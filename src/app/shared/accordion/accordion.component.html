@@ -46,8 +46,9 @@
         <ng-template #docTextArea>
           <textarea
             class="form-control"
-            [className]="item?.className"
+            rows="3"
             [id]="item?.idDoc"
+            value="{{ docItem[item.idDoc] }}"
           ></textarea>
         </ng-template>
       </div>

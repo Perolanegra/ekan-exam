@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, signal, inject, Renderer2, Input, WritableSignal } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
@@ -7,7 +7,7 @@ import { InputControlDocuments } from '../dialog/model/controls';
   selector: 'app-accordion',
   templateUrl: './accordion.component.html',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, DatePipe],
+  imports: [NgClass, NgFor, NgIf],
   styleUrls: ['./accordion.component.css']
 })
 export class AccordionComponent {
