@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { DestroyRef, Injectable, Signal, WritableSignal, inject, signal } from '@angular/core';
+import { DestroyRef, Injectable, WritableSignal, inject, signal } from '@angular/core';
 import {
   catchError,
   filter,
@@ -20,7 +20,7 @@ import { InputControls, InputControlDocuments } from '../shared/dialog/model/con
 export class BeneficiaryService {
   private url = 'http://localhost:3000';
   http = inject(HttpClient);
-  public destroyRef = inject(DestroyRef);
+  private destroyRef = inject(DestroyRef);
 
   constructor() { }
   // First page of beneficiarys
@@ -39,9 +39,13 @@ export class BeneficiaryService {
     switchMap(beneficiary => of(beneficiary.documents))
   );
 
+  changeToApiURL(): void {
+    this.url = "https://localhost:3200";
+  }
+
   beneficiaryDocuments = toSignal<Document[], Document[]>(this.beneficiaryDocuments$, { initialValue: [] });
 
-  beneficiarySelected(bId: string) {
+  beneficiarySelected(bId: string): void {
     if (bId) {
       const foundbeneficiary = this.beneficiarys().find((b) => b.id === bId);
       this.selectedbeneficiary.set(foundbeneficiary ? foundbeneficiary : {} as Beneficiary);
@@ -50,36 +54,46 @@ export class BeneficiaryService {
 
   updatedBeneficiary: WritableSignal<Beneficiary | undefined> = signal(undefined);
 
-  updateBeneficiary = (payload: Partial<Beneficiary>) => {
+  updateBeneficiary = (payload: Partial<Beneficiary>): void => {
     this.http.put<Beneficiary>(`${this.url}/update`, payload).pipe(
       map((updatedB) => updatedB as Beneficiary),
       shareReplay(1),
       takeUntilDestroyed(this.destroyRef),
       catchError(this.handleError)
     ).subscribe(res => {
-      console.log('res: ', res);
       this.updatedBeneficiary.set(res);
-    })
+    });
   }
 
-  createBeneficiary = (payload: Beneficiary) => {
-    const responsePostBeneficiary$ = this.http.post<any>(`${this.url}/create`, payload).pipe(
+  createdBeneficiary: WritableSignal<Beneficiary | undefined> = signal(undefined);
+
+  createBeneficiary = (payload: Beneficiary): void => {
+    this.http.post<any>(`${this.url}/create`, payload).pipe(
       map((response: Beneficiary) => response),
       shareReplay(1),
+      takeUntilDestroyed(this.destroyRef),
       catchError(this.handleError)
-    );
+    ).subscribe({
+      next: (data) => this.createdBeneficiary.set(data)
+    });
 
-    return toSignal<Beneficiary, Beneficiary>(responsePostBeneficiary$, { initialValue: {} as Beneficiary });
   }
 
+  removedBeneficiaryById: WritableSignal<{
+    "success": boolean,
+    "name": string,
+    "id": string
+  } | undefined> = signal(undefined);
+
   removeBeneficiaryById = (bId: string) => {
-    const removedBeneficiary$ = this.http.delete<any>(`${this.url}/remove`, { body: bId }).pipe(
+    this.http.delete<any>(`${this.url}/remove`, { body: bId }).pipe(
       map((response: any) => response),
       shareReplay(1),
-      catchError(this.handleError)
-    );
-
-    return toSignal(removedBeneficiary$, { initialValue: {} as Beneficiary });
+      takeUntilDestroyed(this.destroyRef),
+      catchError(this.handleError),
+    ).subscribe({
+      next: (data) => this.removedBeneficiaryById.set(data)
+    });
   }
 
   private handleError(err: HttpErrorResponse): Observable<never> {
