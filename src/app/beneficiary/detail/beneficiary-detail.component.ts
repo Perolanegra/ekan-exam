@@ -62,7 +62,7 @@ export class BeneficiaryDetailComponent {
   }
 
   updateBeneficiary(payload: Partial<Beneficiary>) {
-    console.log('updateBeneficiary works in detail component with payload: ', payload);
+    this.beneficiaryService.updateBeneficiary(payload);
     this.hideAccordeonOnClosed();
   }
 

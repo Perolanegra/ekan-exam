@@ -17,36 +17,43 @@
         </div>
         <div class="modal-body">
           <div class="form-group" *ngFor="let item of controls()">
-            <label for="recipient-name" class="col-form-label"
-              >{{ item?.label }}:</label
-            >
-            <input
-              *ngIf="item.type !== 'textarea'; else myTextArea"
-              [type]="item.type"
-              class="form-control"
-              [id]="item?.id"
-              [mask]="item.type === 'tel' ? '(00) 0 0000-0000' : ''"
-              required
-              [(ngModel)]="selectedData()[item.id]"
-              [ngModelOptions]="{
-                name: item.label
-                  .toString()
-                  .trim()
-                  .toLowerCase()
-                  .replaceAll(' ', '_')
-                  .normalize('NFD')
-                  .replace(removeAccentuationReg, '')
-              }"
-            />
-
-            <!-- value="{{ selectedData()[item.id] }}" -->
-
-            <ng-template #myTextArea>
-              <textarea
+            <ng-container *ngIf="item.id !== 'id'; else myHiddenIdInput">
+              <label for="recipient-name" class="col-form-label"
+                >{{ item?.label }}:</label
+              >
+              <input
+                *ngIf="item.type !== 'textarea'; else myTextArea"
+                [type]="item.type"
                 class="form-control"
-                [className]="item?.className"
                 [id]="item?.id"
-              ></textarea>
+                [mask]="item.type === 'tel' ? '(00) 0 0000-0000' : ''"
+                required
+                [(ngModel)]="selectedData()[item.id]"
+                [ngModelOptions]="{
+                  name: item.id ? item.id : ''
+                }"
+              />
+
+              <ng-template #myTextArea>
+                <textarea
+                  class="form-control"
+                  [className]="item?.className"
+                  [id]="item?.id"
+                ></textarea>
+              </ng-template>
+            </ng-container>
+
+            <ng-template #myHiddenIdInput>
+              <input
+                hidden="true"
+                class="form-control"
+                [id]="item?.id"
+                required
+                [(ngModel)]="selectedData()[item.id]"
+                [ngModelOptions]="{
+                  name: item.id ? item.id : ''
+                }"
+              />
             </ng-template>
           </div>
 

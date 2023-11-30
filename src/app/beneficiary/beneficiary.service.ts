@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, Signal, inject, signal } from '@angular/core';
+import { DestroyRef, Injectable, Signal, WritableSignal, inject, signal } from '@angular/core';
 import {
   catchError,
   filter,
@@ -10,16 +10,17 @@ import {
   switchMap,
   throwError
 } from 'rxjs';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { toSignal, toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Document, Beneficiary, BeneficiaryResponse } from './model/beneficiary';
 import { InputControls, InputControlDocuments } from '../shared/dialog/model/controls';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class BeneficiaryService {
   private url = 'http://localhost:3000';
   http = inject(HttpClient);
+  public destroyRef = inject(DestroyRef);
 
   constructor() { }
   // First page of beneficiarys
@@ -47,16 +48,18 @@ export class BeneficiaryService {
     }
   }
 
-  updatedBeneficiary: Signal<Beneficiary | undefined> = signal(undefined);
+  updatedBeneficiary: WritableSignal<Beneficiary | undefined> = signal(undefined);
 
   updateBeneficiary = (payload: Partial<Beneficiary>) => {
-    const updatedBeneficiary$ = this.http.put<Beneficiary>(`${this.url}/update`, payload).pipe(
+    this.http.put<Beneficiary>(`${this.url}/update`, payload).pipe(
       map((updatedB) => updatedB as Beneficiary),
       shareReplay(1),
+      takeUntilDestroyed(this.destroyRef),
       catchError(this.handleError)
-    );
-
-    this.updatedBeneficiary = toSignal<Beneficiary, Beneficiary>(updatedBeneficiary$, { initialValue: {} as Beneficiary });
+    ).subscribe(res => {
+      console.log('res: ', res);
+      this.updatedBeneficiary.set(res);
+    })
   }
 
   createBeneficiary = (payload: Beneficiary) => {
@@ -99,6 +102,12 @@ export class BeneficiaryService {
 
   inputControlsBeneficiary = signal<InputControls[]>(
     [
+      {
+        type: 'text',
+        id: 'id',
+        className: '',
+        label: '',
+      },
       {
         type: 'text',
         id: 'name',

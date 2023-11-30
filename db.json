@@ -5,7 +5,7 @@
         "id": "b1",
         "name": "Igor",
         "phone": "619820803693",
-        "birthDate": "2023-11-29",
+        "birthDate": "1996-08-25",
         "addedDate": "2023-11-29",
         "updateDate": "2023-11-29",
         "documents": [
@@ -54,34 +54,25 @@
   "update": {
     "id": "b1",
     "name": "Igor",
-    "phone": "71982547145",
-    "birthDate": "20/05/2023",
-    "addedDate": "15/03/2023",
-    "updateDate": "05/08/2023",
-    "documents": [
-      {
-        "id": "doc-igor1",
-        "documentType": "Tipo do documento",
-        "desc": "descricao documento",
-        "addedDate": "15/03/2023",
-        "updatedDate": "02/09/2023"
-      }
-    ]
+    "phone": "619820803693",
+    "birthDate": "1996-08-25",
+    "addedDate": "2023-11-29",
+    "updateDate": "2023-11-29"
   },
   "create": {
     "id": "b2",
     "name": "Felipe",
     "phone": "71994741230",
-    "birthDate": "20/05/2023",
-    "addedDate": "15/03/2023",
-    "updateDate": "05/08/2023",
+    "birthDate": "1959-05-12",
+    "addedDate": "2020-05-12",
+    "updateDate": "2023-11-30",
     "documents": [
       {
         "id": "doc-felipe1",
         "documentType": "Tipo do documento1",
         "desc": "descricao documento1",
-        "addedDate": "15/03/2023",
-        "updatedDate": "02/09/2023"
+        "addedDate": "2023-11-30",
+        "updatedDate": "2023-11-30"
       }
     ]
   },
