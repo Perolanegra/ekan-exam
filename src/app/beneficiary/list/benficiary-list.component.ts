@@ -3,6 +3,7 @@ import { NgFor, NgClass, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
+import { Beneficiary } from '../model/beneficiary';
 
 @Component({
   selector: 'beneficiary-list',
@@ -32,6 +33,7 @@ import { AccordionComponent } from '../../shared/accordion/accordion.component';
         align-items: end;
         padding: 20px;
         cursor: pointer;
+        opacity: 0;
       }
 
     `
@@ -61,6 +63,15 @@ export class BeneficiaryListComponent {
   // When a beneficiary is selected, emit the selected beneficiary name
   onSelected(bID: string | undefined): void {
     this.bService.beneficiarySelected(bID as string);
+  }
+
+  hideAccordeonOnCancel(): void {
+    const customEvent = new CustomEvent('resetAccordeonState');
+    window.dispatchEvent(customEvent);
+  }
+
+  submitRegister(payload: Partial<Beneficiary>): void {
+    console.log('submit Register on List component works with payload: ', payload);
   }
 
 }

@@ -1,13 +1,14 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
+import { Beneficiary } from '../model/beneficiary';
 
 @Component({
   selector: 'beneficiary-detail',
   standalone: true,
-  imports: [NgFor, NgIf, DialogComponent, AccordionComponent, DatePipe],
+  imports: [NgFor, NgIf, DialogComponent, AccordionComponent, DatePipe, NgClass],
   templateUrl: './beneficiary-detail.component.html',
   styles: [
     `.box-docs {
@@ -20,6 +21,20 @@ import { AccordionComponent } from '../../shared/accordion/accordion.component';
     li span {
       text-decoration: underline;
     }
+
+    .remove-icon {
+      background-image: url('../svg/remove-icon.svg');
+      background-size: cover;
+      width: 4.5%;
+      cursor: pointer;
+      margin-right: 1%;
+    }
+
+    .card-header:first-child {
+      display: flex;
+      justify-content: space-between;
+    }
+
     `
   ]
 })
@@ -36,5 +51,18 @@ export class BeneficiaryDetailComponent {
   controlsDoc = this.beneficiaryService.inputControlsDocs;
 
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
+
+  hideAccordeonOnCancel(): void {
+    const customEvent = new CustomEvent('resetAccordeonState');
+    window.dispatchEvent(customEvent);
+  }
+
+  updateBeneficiary(payload: Partial<Beneficiary>) {
+    console.log('updateBeneficiary works in detail component with payload: ', payload);
+  }
+
+  removeBeneficiary(idBeneficiary: string | undefined) {
+    console.log('removeBeneficiary works in detail component with payload: ', idBeneficiary);
+  }
 
 }

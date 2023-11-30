@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild, WritableSignal, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, WritableSignal, signal } from '@angular/core';
 import { InputControls } from './model/controls';
 import { Beneficiary } from '../../beneficiary/model/beneficiary';
 
@@ -26,16 +26,18 @@ export class DialogComponent {
   @Input()
   addBeneficiaryMode: boolean = false;
 
+  @Output()
+  canceled: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  submitted: EventEmitter<any> = new EventEmitter();
+
   addDoc(): void {
     console.log('add doc method works!');
   }
 
-  hideAccordion() {
-    
-  }
+  cancelWasTriggered = () => this.canceled.emit();
 
-  submit() {
-
-  }
+  submit = (payload: any) => this.submitted.emit(payload);
 
 }

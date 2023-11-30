@@ -1,6 +1,7 @@
 <div class="card" *ngIf="selectedBeneficiary().id">
   <div class="card-header">
     {{ pageTitle() }}
+    <div (click)="removeBeneficiary(selectedBeneficiary().id)" class="remove-icon" alt="Remove Icon"></div>
   </div>
 
   <div class="card-body">
@@ -8,7 +9,7 @@
       <div class="col-md-3">Nome:</div>
       <div class="col-md-6">{{ selectedBeneficiary().name }}</div>
       <div class="col-md-3">
-        <button class="btn btn-primary" (click)="hideAccordion.set(true); showModal.set(!showModal()); ">
+        <button [disabled]="showModal()" class="btn btn-primary" (click)="hideAccordion.set(true); showModal.set(!showModal()); ">
           Atualizar
         </button>
       </div>
@@ -60,6 +61,8 @@
   [isActive]="showModal"
   [controls]="inputControls"
   [beneficiary]="selectedBeneficiary"
+  (canceled)="hideAccordeonOnCancel()"
+  (submitted)="updateBeneficiary($event)"
 >
   <app-accordion
     [controlsDoc]="controlsDoc"

@@ -11,8 +11,6 @@ import { InputControlDocuments } from '../dialog/model/controls';
   styleUrls: ['./accordion.component.css']
 })
 export class AccordionComponent {
-  constructor() { }
-
   private renderer = inject(Renderer2);
 
   @Input()
@@ -24,6 +22,7 @@ export class AccordionComponent {
   @Input()
   documents!: Document[];
 
+
   toggleAccordion(doc: Document) {
     doc.showAccordeon = doc.showAccordeon ?? false;
     doc.showAccordeon = !doc.showAccordeon;
@@ -33,11 +32,9 @@ export class AccordionComponent {
     this.renderer.setStyle(modalBody, 'cursor', 'not-allowed');
 
     const elementRef = document.querySelector(`#${doc.id}`);
-    // since im not in directive, then this below wont work.
-    // let elementBtn = document.querySelector('.accordion-button');
-    // this.renderer.setProperty(elementBtn, '--bs-accordion-btn-icon-transform', 'rotate(-360deg)')
+    // since im not in directive, i had to get by document.querysSelector, which its not the best approach.
     if (doc.showAccordeon) {
-      // so it goes like this, for now, but in a real app this styles manipulations should go in a directive.
+      // so it goes like this, for now, but in a real app this styles manipulations should go in a directive with elementRefInstance.
       (document.querySelector(`.accordion-button.${doc.id}`) as any)?.style.setProperty('--bs-accordion-btn-icon-transform', 'rotate(-360deg)');
       this.renderer.removeClass(elementRef, 'hideEase');
       this.renderer.addClass(elementRef, 'showEase');
@@ -58,7 +55,13 @@ export class AccordionComponent {
 
   }
 
-  // @HostListener("window:resetAccordeonState", ["$event"])
-  // resetAccordeonState = () => (this.toggleAccordion(this.lastAccordeonIdOpened));
+  @HostListener("window:resetAccordeonState")
+  resetAccordeonState = () => {
+    this.documents?.map(doc => doc.showAccordeon ? this.toggleAccordion(doc) : '');
+  };
+
+  submit() {
+    // TODO: pegar os valores de todos os inputs e colocar num array de objetos de Document.
+  }
 
 }

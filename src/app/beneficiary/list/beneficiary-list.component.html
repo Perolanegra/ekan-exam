@@ -1,15 +1,19 @@
 <div class="card">
   <div class="card-header own-header">
     {{ pageTitle }}
-    <div
+    <button
+      [disabled]="showModalAdd()"
       class="pseudo-clicker"
-      (click)="onSelected('none'); showModalAdd.set(true); hideAccordion.set(true);"
-    ></div>
+      (click)="
+        onSelected('none'); showModalAdd.set(true); hideAccordion.set(true)
+      "
+    ></button>
   </div>
 
   <div class="card-body" *ngIf="beneficiaries()?.length">
     <div class="list-group">
       <button
+        [disabled]="showModalAdd()"
         type="button"
         class="list-group-item"
         *ngFor="let b of beneficiaries()"
@@ -27,12 +31,13 @@
 </div>
 
 <ng-container *ngIf="showModalAdd()">
-
   <app-dialog
     [isActive]="showModalAdd"
     [controls]="inputControls"
     [beneficiary]="selectedBeneficiary"
     [addBeneficiaryMode]="true"
+    (canceled)="hideAccordeonOnCancel()"
+    (submitted)="submitRegister($event)"
   >
     <app-accordion
       [controlsDoc]="controlsDoc"
@@ -40,6 +45,4 @@
       [hideAccordion]="hideAccordion"
     ></app-accordion>
   </app-dialog>
-
 </ng-container>
-
