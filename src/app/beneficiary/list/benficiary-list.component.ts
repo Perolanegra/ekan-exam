@@ -65,7 +65,7 @@ export class BeneficiaryListComponent {
     this.bService.beneficiarySelected(bID as string);
   }
 
-  hideAccordeonOnCancel(): void {
+  hideAccordeonOnClosed(): void {
     const customEvent = new CustomEvent('resetAccordeonState');
     window.dispatchEvent(customEvent);
   }

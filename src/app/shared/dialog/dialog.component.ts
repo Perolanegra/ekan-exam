@@ -1,18 +1,20 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, WritableSignal, signal } from '@angular/core';
 import { InputControls } from './model/controls';
-import { Beneficiary } from '../../beneficiary/model/beneficiary';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf],
+  imports: [NgClass, NgFor, NgIf, FormsModule],
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent {
 
   constructor() { }
+
+  removeAccentuationReg = /[\u0300-\u036f]/g;
 
   @Input()
   isActive = signal(false);
@@ -21,10 +23,16 @@ export class DialogComponent {
   controls!: WritableSignal<InputControls[]>
 
   @Input()
-  beneficiary!: WritableSignal<Beneficiary>;
+  selectedData!: WritableSignal<any>;
 
   @Input()
-  addBeneficiaryMode: boolean = false;
+  addMode: boolean = false;
+
+  @Input()
+  addAccordeonBtnText!: string;
+
+  @Input()
+  headerText!: string;
 
   @Output()
   canceled: EventEmitter<any> = new EventEmitter();
@@ -32,12 +40,17 @@ export class DialogComponent {
   @Output()
   submitted: EventEmitter<any> = new EventEmitter();
 
-  addDoc(): void {
-    console.log('add doc method works!');
+  addAccordeonElement(): void {
+    console.log('addAccordeonElement method works!');
   }
 
   cancelWasTriggered = () => this.canceled.emit();
 
-  submit = (payload: any) => this.submitted.emit(payload);
+  submit = (form: any) => {
+    if (form.valid) {
+      this.submitted.emit(form.value);
+      this.isActive.set(false);
+    }
+  }
 
 }

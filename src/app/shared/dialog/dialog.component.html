@@ -7,15 +7,15 @@
   aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">
-          Atualização Beneficiário: {{ beneficiary().name }}
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form>
+  <form #f="ngForm" (ngSubmit)="submit(f.form)" novalidate>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            {{ addMode ? headerText : headerText + ": " + selectedData().name }}
+          </h5>
+        </div>
+        <div class="modal-body">
           <div class="form-group" *ngFor="let item of controls()">
             <label for="recipient-name" class="col-form-label"
               >{{ item?.label }}:</label
@@ -25,8 +25,20 @@
               [type]="item?.type"
               class="form-control"
               [id]="item?.id"
-              value="{{ beneficiary()[item.id] }}"
+              required
+              [(ngModel)]="selectedData()[item.id]"
+              [ngModelOptions]="{
+                name: item.label
+                  .toString()
+                  .trim()
+                  .toLowerCase()
+                  .replaceAll(' ', '_')
+                  .normalize('NFD')
+                  .replace(removeAccentuationReg, '')
+              }"
             />
+
+            <!-- value="{{ selectedData()[item.id] }}" -->
 
             <ng-template #myTextArea>
               <textarea
@@ -38,13 +50,13 @@
           </div>
 
           <div class="form-group mt-3 mb-3">
-            <div class="list-group" *ngIf="addBeneficiaryMode">
+            <div class="list-group" *ngIf="addMode">
               <button
                 type="button"
                 class="list-group-item active"
-                (click)="addDoc()"
+                (click)="addAccordeonElement()"
               >
-                Adicionar Documento
+                {{ addAccordeonBtnText }}
               </button>
             </div>
           </div>
@@ -52,21 +64,19 @@
           <div class="form-group">
             <ng-content></ng-content>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-          (click)="isActive.set(false); cancelWasTriggered();"
-        >
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-primary" (click)="submit('')">
-          Atualizar
-        </button>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            (click)="isActive.set(false); cancelWasTriggered()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">Atualizar</button>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

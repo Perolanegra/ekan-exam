@@ -60,8 +60,9 @@
 <app-dialog
   [isActive]="showModal"
   [controls]="inputControls"
-  [beneficiary]="selectedBeneficiary"
-  (canceled)="hideAccordeonOnCancel()"
+  [selectedData]="selectedBeneficiary"
+  headerText=""
+  (canceled)="hideAccordeonOnClosed()"
   (submitted)="updateBeneficiary($event)"
 >
   <app-accordion

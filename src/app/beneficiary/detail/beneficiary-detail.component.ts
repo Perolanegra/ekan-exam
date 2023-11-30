@@ -52,13 +52,14 @@ export class BeneficiaryDetailComponent {
 
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
 
-  hideAccordeonOnCancel(): void {
+  hideAccordeonOnClosed(): void {
     const customEvent = new CustomEvent('resetAccordeonState');
     window.dispatchEvent(customEvent);
   }
 
   updateBeneficiary(payload: Partial<Beneficiary>) {
     console.log('updateBeneficiary works in detail component with payload: ', payload);
+    this.hideAccordeonOnClosed();
   }
 
   removeBeneficiary(idBeneficiary: string | undefined) {

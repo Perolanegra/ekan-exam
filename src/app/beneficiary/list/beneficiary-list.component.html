@@ -34,9 +34,11 @@
   <app-dialog
     [isActive]="showModalAdd"
     [controls]="inputControls"
-    [beneficiary]="selectedBeneficiary"
-    [addBeneficiaryMode]="true"
-    (canceled)="hideAccordeonOnCancel()"
+    [selectedData]="selectedBeneficiary"
+    addAccordeonBtnText="Adicionar Documento"
+    headerText="Cadastrar Beneficiário"
+    [addMode]="true"
+    (canceled)="hideAccordeonOnClosed()"
     (submitted)="submitRegister($event)"
   >
     <app-accordion
