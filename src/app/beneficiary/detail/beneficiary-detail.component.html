@@ -16,7 +16,7 @@
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Telefone:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().phone }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().phone | mask: '(00) 0 0000-0000' }}</div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Nascimento:</div>

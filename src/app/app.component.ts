@@ -13,7 +13,7 @@ registerLocaleData(localePt);
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
   ]
 })
 export class AppComponent {

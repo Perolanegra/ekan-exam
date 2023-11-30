@@ -22,9 +22,10 @@
             >
             <input
               *ngIf="item.type !== 'textarea'; else myTextArea"
-              [type]="item?.type"
+              [type]="item.type"
               class="form-control"
               [id]="item?.id"
+              [mask]="item.type === 'tel' ? '(00) 0 0000-0000' : ''"
               required
               [(ngModel)]="selectedData()[item.id]"
               [ngModelOptions]="{

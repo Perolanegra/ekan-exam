@@ -106,7 +106,7 @@ export class BeneficiaryService {
         label: 'Nome',
       },
       {
-        type: 'text',
+        type: 'tel',
         id: 'phone',
         className: '',
         label: 'Telefone',

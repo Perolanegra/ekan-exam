@@ -4,12 +4,16 @@ import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { Beneficiary } from '../model/beneficiary';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'beneficiary-detail',
   standalone: true,
-  imports: [NgFor, NgIf, DialogComponent, AccordionComponent, DatePipe, NgClass],
+  imports: [NgFor, NgIf, DialogComponent, AccordionComponent, DatePipe, NgClass, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './beneficiary-detail.component.html',
+  providers: [
+    provideNgxMask()
+  ],
   styles: [
     `.box-docs {
       display: flex;

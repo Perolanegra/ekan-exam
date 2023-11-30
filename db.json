@@ -4,7 +4,7 @@
       {
         "id": "b1",
         "name": "Igor",
-        "phone": 619820803693,
+        "phone": "619820803693",
         "birthDate": "2023-11-29",
         "addedDate": "2023-11-29",
         "updateDate": "2023-11-29",
@@ -21,7 +21,7 @@
       {
         "id": "b2",
         "name": "Felipe",
-        "phone": 71982457421,
+        "phone": "71982457421",
         "birthDate": "2023-11-29",
         "addedDate": "2023-11-29",
         "updateDate": "2023-11-29",
@@ -54,7 +54,7 @@
   "update": {
     "id": "b1",
     "name": "Igor",
-    "phone": 71982547145,
+    "phone": "71982547145",
     "birthDate": "20/05/2023",
     "addedDate": "15/03/2023",
     "updateDate": "05/08/2023",
@@ -71,7 +71,7 @@
   "create": {
     "id": "b2",
     "name": "Felipe",
-    "phone": 71994741230,
+    "phone": "71994741230",
     "birthDate": "20/05/2023",
     "addedDate": "15/03/2023",
     "updateDate": "05/08/2023",

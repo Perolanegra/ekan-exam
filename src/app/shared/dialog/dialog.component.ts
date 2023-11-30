@@ -1,13 +1,17 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, WritableSignal, signal } from '@angular/core';
 import { InputControls } from './model/controls';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, FormsModule],
+  imports: [NgClass, NgFor, NgIf, FormsModule, NgxMaskDirective, NgxMaskPipe],
+  providers: [
+    provideNgxMask()
+  ],
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent {
