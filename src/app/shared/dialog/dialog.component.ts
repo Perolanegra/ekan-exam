@@ -45,6 +45,7 @@ export class DialogComponent {
   submitted: EventEmitter<any> = new EventEmitter();
 
   addAccordeonElement(): void {
+    // TODO: adicionar a lógica pra adicionar os accordeons de acordo com o dado passado do componente pai.
     console.log('addAccordeonElement method works!');
   }
 
@@ -52,7 +53,7 @@ export class DialogComponent {
 
   submit = (form: any) => {
     if (form.valid) {
-      this.submitted.emit(form.value);
+      this.submitted.emit(this.addMode ? form.value : '');
       this.isActive.set(false);
     }
   }

@@ -2,12 +2,13 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, inject, Renderer2, Input, WritableSignal, HostListener } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-accordion',
   templateUrl: './accordion.component.html',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf],
+  imports: [NgClass, NgFor, NgIf, FormsModule],
   styleUrls: ['./accordion.component.css']
 })
 export class AccordionComponent {
@@ -21,7 +22,6 @@ export class AccordionComponent {
 
   @Input()
   documents!: Document[];
-
 
   toggleAccordion(doc: Document) {
     doc.showAccordeon = doc.showAccordeon ?? false;
@@ -60,8 +60,8 @@ export class AccordionComponent {
     this.documents?.map(doc => doc.showAccordeon ? this.toggleAccordion(doc) : '');
   };
 
-  submit() {
-    // TODO: pegar os valores de todos os inputs e colocar num array de objetos de Document.
+  updateFormValue(value: string, id: string, accordeonIndex: number): void {
+    (this.documents[accordeonIndex] as any)[id] = value;
   }
 
 }

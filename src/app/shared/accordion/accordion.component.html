@@ -28,7 +28,7 @@
       data-bs-parent="#accordionExample"
     >
       <div
-        *ngFor="let item of controlsDoc(); let i = index"
+        *ngFor="let item of controlsDoc(); let j = index"
         class="accordion-body"
       >
         <label for="recipient-name" class="col-form-label"
@@ -40,7 +40,8 @@
           [type]="item?.type"
           class="form-control"
           [id]="item?.idDoc"
-          value="{{ docItem[item.idDoc] }}"
+          [ngModel]="docItem[item.idDoc]"
+          (ngModelChange)="updateFormValue($event, item.idDoc, i)"
         />
 
         <ng-template #docTextArea>
@@ -48,7 +49,8 @@
             class="form-control"
             rows="3"
             [id]="item?.idDoc"
-            value="{{ docItem[item.idDoc] }}"
+            [ngModel]="docItem[item.idDoc]"
+            (ngModelChange)="updateFormValue($event, item.idDoc, i)"
           ></textarea>
         </ng-template>
       </div>

@@ -16,7 +16,3 @@ export interface Document {
   updatedDate: string | Date;
   showAccordeon: boolean;
 }
-
-export interface BeneficiaryResponse {
-  results: Beneficiary[];
-}

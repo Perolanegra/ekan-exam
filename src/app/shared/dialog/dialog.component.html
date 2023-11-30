@@ -7,7 +7,7 @@
   aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true"
 >
-  <form #f="ngForm" (ngSubmit)="submit(f.form)" novalidate>
+  <form #myDialogForm="ngForm" (ngSubmit)="submit(myDialogForm.form)" novalidate>
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">

@@ -76,9 +76,49 @@
       }
     ]
   },
-  "remove": {
-    "success": true,
-    "name": "Felipe",
-    "id": "b1"
-  }
+  "beneficiary": [
+    {
+      "id": "b1",
+      "name": "Igor",
+      "phone": "619820803693",
+      "birthDate": "1996-08-25",
+      "addedDate": "2023-11-29",
+      "updateDate": "2023-11-29",
+      "documents": [
+        {
+          "id": "doc-igor1",
+          "documentType": "Tipo do documento",
+          "desc": "descricao documento",
+          "addedDate": "2023-11-29",
+          "updatedDate": "2023-11-29"
+        }
+      ]
+    },
+    {
+      "name": "Gabriel Antunes",
+      "phone": "61982856542",
+      "birthDate": "1959-08-05",
+      "addedDate": "1959-08-05",
+      "updateDate": "1959-08-05",
+      "documents": [
+        {
+          "id": "doc-felipe1",
+          "documentType": "novo doc 123",
+          "desc": "nova desc 1",
+          "addedDate": "2023-11-30",
+          "updatedDate": "2023-11-30",
+          "showAccordeon": true
+        },
+        {
+          "id": "doc-felipe2",
+          "documentType": "novo tipo 2",
+          "desc": "descricao documento2",
+          "addedDate": "2023-11-30",
+          "updatedDate": "2023-11-30",
+          "showAccordeon": false
+        }
+      ],
+      "id": "TCreRGk"
+    }
+  ]
 }

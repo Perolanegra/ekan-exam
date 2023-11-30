@@ -10,13 +10,13 @@
     ></button>
   </div>
 
-  <div class="card-body" *ngIf="beneficiaries()?.length">
+  <div class="card-body" *ngIf="bService.beneficiarys()?.length">
     <div class="list-group">
       <button
         [disabled]="showModalAdd()"
         type="button"
         class="list-group-item"
-        *ngFor="let b of beneficiaries()"
+        *ngFor="let b of bService.beneficiarys()"
         [ngClass]="{ active: b?.name === selectedBeneficiary().name }"
         (click)="onSelected(b.id)"
       >

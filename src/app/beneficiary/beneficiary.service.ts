@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { DestroyRef, Injectable, WritableSignal, inject, signal } from '@angular/core';
 import {
   catchError,
@@ -11,11 +11,11 @@ import {
   throwError
 } from 'rxjs';
 import { toSignal, toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Document, Beneficiary, BeneficiaryResponse } from './model/beneficiary';
+import { Document, Beneficiary } from './model/beneficiary';
 import { InputControls, InputControlDocuments } from '../shared/dialog/model/controls';
 
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'root'
 })
 export class BeneficiaryService {
   private url = 'http://localhost:3000';
@@ -24,8 +24,8 @@ export class BeneficiaryService {
 
   constructor() { }
   // First page of beneficiarys
-  private beneficiarys$ = this.http.get<BeneficiaryResponse>(`${this.url}/list`).pipe(
-    map((data) => data.results as Beneficiary[]),
+  private beneficiarys$ = this.http.get<Beneficiary[]>(`${this.url}/beneficiary`).pipe(
+    map((data) => data as Beneficiary[]),
     shareReplay(1),
     catchError(this.handleError)
   );
@@ -52,47 +52,51 @@ export class BeneficiaryService {
     }
   }
 
-  updatedBeneficiary: WritableSignal<Beneficiary | undefined> = signal(undefined);
-
   updateBeneficiary = (payload: Partial<Beneficiary>): void => {
-    this.http.put<Beneficiary>(`${this.url}/update`, payload).pipe(
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer your-access-token'
+      })
+    };
+
+    this.http.patch<Partial<Beneficiary>>(`${this.url}/beneficiary/${payload.id}`, payload, httpOptions).pipe(
       map((updatedB) => updatedB as Beneficiary),
       shareReplay(1),
-      takeUntilDestroyed(this.destroyRef),
       catchError(this.handleError)
-    ).subscribe(res => {
-      this.updatedBeneficiary.set(res);
-    });
+    ).subscribe();
   }
 
-  createdBeneficiary: WritableSignal<Beneficiary | undefined> = signal(undefined);
-
   createBeneficiary = (payload: Beneficiary): void => {
-    this.http.post<any>(`${this.url}/create`, payload).pipe(
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer your-access-token'
+      })
+    };
+
+    this.http.post<any>(`${this.url}/beneficiary`, payload, httpOptions).pipe(
       map((response: Beneficiary) => response),
       shareReplay(1),
       takeUntilDestroyed(this.destroyRef),
       catchError(this.handleError)
     ).subscribe({
-      next: (data) => this.createdBeneficiary.set(data)
+      next: (data: Beneficiary) => this.beneficiarys().push(data)
     });
 
   }
 
-  removedBeneficiaryById: WritableSignal<{
-    "success": boolean,
-    "name": string,
-    "id": string
-  } | undefined> = signal(undefined);
-
-  removeBeneficiaryById = (bId: string) => {
-    this.http.delete<any>(`${this.url}/remove`, { body: bId }).pipe(
+  removeBeneficiaryById = (bId: string | undefined) => {
+    this.http.delete<any>(`${this.url}/beneficiary/${bId}`).pipe(
       map((response: any) => response),
       shareReplay(1),
       takeUntilDestroyed(this.destroyRef),
       catchError(this.handleError),
     ).subscribe({
-      next: (data) => this.removedBeneficiaryById.set(data)
+      next: () => {
+        this.beneficiarys = signal(this.beneficiarys().filter(b => b.id !== bId));
+        this.selectedbeneficiary.set({} as Beneficiary);
+      }
     });
   }
 

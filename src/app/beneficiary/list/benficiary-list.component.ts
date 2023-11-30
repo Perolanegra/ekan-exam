@@ -71,6 +71,7 @@ export class BeneficiaryListComponent {
   }
 
   submitRegister(payload: Partial<Beneficiary>): void {
+    // TODO: fazer a lógica chamando o método que bate na api enviando payload do beneficiário.
     console.log('submit Register on List component works with payload: ', payload);
   }
 

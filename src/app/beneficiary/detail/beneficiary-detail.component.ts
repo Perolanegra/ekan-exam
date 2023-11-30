@@ -3,7 +3,6 @@ import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
-import { Beneficiary } from '../model/beneficiary';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
@@ -61,13 +60,13 @@ export class BeneficiaryDetailComponent {
     window.dispatchEvent(customEvent);
   }
 
-  updateBeneficiary(payload: Partial<Beneficiary>) {
-    this.beneficiaryService.updateBeneficiary(payload);
+  updateBeneficiary(): void {
+    this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
     this.hideAccordeonOnClosed();
   }
 
-  removeBeneficiary(idBeneficiary: string | undefined) {
-    console.log('removeBeneficiary works in detail component with payload: ', idBeneficiary);
+  removeBeneficiary(idBeneficiary: string | undefined): void {
+    idBeneficiary ? this.beneficiaryService.removeBeneficiaryById(idBeneficiary) : '';
   }
 
 }
