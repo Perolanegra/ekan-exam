@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { DestroyRef, Injectable, WritableSignal, inject, signal } from '@angular/core';
+import { DestroyRef, Injectable, inject, signal } from '@angular/core';
 import {
   catchError,
   filter,
@@ -39,8 +39,8 @@ export class BeneficiaryService {
     switchMap(beneficiary => of(beneficiary.documents))
   );
 
-  changeToApiURL(): void {
-    this.url = "https://localhost:3200";
+  changeToMockURL(): void {
+    this.url = "https://localhost:3000";
   }
 
   beneficiaryDocuments = toSignal<Document[], Document[]>(this.beneficiaryDocuments$, { initialValue: [] });
