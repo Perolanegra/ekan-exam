@@ -65,15 +65,27 @@ export class DialogComponent {
   cancelWasTriggered = () => this.canceled.emit();
 
   submit(formInstance: FormGroup) {
+
     const documentsArray = formInstance.get('documents') as FormControl;
     const fullfiled = documentsArray?.value.every((documentObj: any) =>
       Object.values(documentObj).every((valor) => valor !== '')
     );
 
-    if (fullfiled) {
-      this.submitted.emit(this.addMode ? formInstance.value : '');
-      this.isActive.set(false);
+    if (this.addMode) {
+      if (fullfiled) {
+        this.closeaAndEmit(formInstance.value)
+      }
+    } else {
+      if (formInstance.valid) {
+        this.closeaAndEmit(formInstance.value)
+      }
     }
+
+  }
+
+  private closeaAndEmit(formValue: any) {
+    this.submitted.emit(formValue);
+    this.isActive.set(false);
   }
 
 }

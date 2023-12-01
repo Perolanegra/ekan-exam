@@ -8,6 +8,10 @@ Rode a atualização de dependencias com o seguinte comando p/ garantir a equiva
 ## json-server
 
 Caso queira testar o servidor com o mock rode o seguinte comando para subir o json server: `npm run s:mock`
+Certifique-se que para os dados serem apresentados em tela é necessário navegar <br/ > ao service *BeneficiaryService* 
+e procurar pela propriedade `hasMock` e atribuir o valor *Booleano* `true`, <br/> a fim do método checar e setar manualmente
+as seguintes porpriedades referente a data: `addedDate`, `updateDate`, os quais <br/> são setados na criação do recurso
+na api spring boot.
 
 ## Servidor de Desenvolvimento (Angular)
 

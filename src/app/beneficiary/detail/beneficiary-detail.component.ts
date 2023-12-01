@@ -61,8 +61,9 @@ export class BeneficiaryDetailComponent {
   }
 
   updateBeneficiary(): void {
-    this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
+    this.selectedBeneficiary().documents = this.beneficiaryDocuments();
     this.hideAccordeonOnClosed();
+    this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
   }
 
   removeBeneficiary(idBeneficiary: string | undefined): void {
