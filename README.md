@@ -1,8 +1,8 @@
 # Ekan Exame Beneficiário
 
-O projeto foi gerado na versão 17.0.0.
-Antes de rodar o servidor de desenvolvimento, baixar as dependencias do projeto.
-Certifique-se de estar usando a versão 18.18.0 do Nodejs.
+O projeto foi gerado na versão 17.0.0.<br/>
+Antes de rodar o servidor de desenvolvimento, baixar as dependencias do projeto.<br/>
+Certifique-se de estar usando a versão 18.18.0 do Nodejs.<br/>
 Rode a atualização de dependencias com o seguinte comando p/ garantir a equivalência do lock json file: `npm ci`
 
 ## json-server
