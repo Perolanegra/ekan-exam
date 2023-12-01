@@ -7,10 +7,9 @@
     <h2 class="accordion-header" id="headingOne">
       <button
         #btnAccordeon
-        [id]="docItem.id + '-id'"
+        [id]="'acc-btn-' + docItem.id"
         (click)="toggleAccordion(docItem)"
         class="accordion-button"
-        [ngClass]="docItem.id"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseOne"
@@ -22,7 +21,7 @@
     </h2>
 
     <div
-      [id]="docItem.id"
+      [id]="'acc-body-' + docItem.id"
       class="accordion-collapse hideAccordion"
       aria-labelledby="headingOne"
       data-bs-parent="#accordionExample"

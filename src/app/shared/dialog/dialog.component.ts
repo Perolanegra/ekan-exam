@@ -57,24 +57,27 @@ export class DialogComponent {
   addAccordeonElement = (formInstance: FormGroup): void => {
     formInstance.controls['documents'] ? '' :
       formInstance.addControl('documents', new FormControl(this.documents, Validators.required));
-    formInstance.removeControl('addedDate');
-    formInstance.removeControl('updateDate');
+    this.removeDateControls(formInstance);
     this.addAccordeon.emit(true);
   }
+
+  removeDateControls(formInstance: FormGroup) {
+    formInstance.removeControl('addedDate');
+    formInstance.removeControl('updateDate');
+  }
+
   cancelWasTriggered = () => this.canceled.emit();
 
   submit(formInstance: FormGroup) {
-
     const documentsArray = formInstance.get('documents') as FormControl;
     const fullfiled = documentsArray?.value.every((documentObj: any) =>
       Object.values(documentObj).every((valor) => valor !== '')
     );
 
-    if (this.addMode) {
-      if (fullfiled) {
-        this.closeaAndEmit(formInstance.value);
-      }
+    if (this.addMode && fullfiled) {
+      this.closeaAndEmit(formInstance.value);
     } else {
+      this.removeDateControls(formInstance);
       if (formInstance.valid) {
         this.closeaAndEmit(formInstance.value);
       }
