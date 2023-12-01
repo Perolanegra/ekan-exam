@@ -26,15 +26,10 @@ export class BeneficiaryService {
   constructor() { }
   // First page of beneficiarys
   private beneficiarys$ = this.http.get<Beneficiary[]>(`${this.url}/beneficiary`).pipe(
-    map((data) => {
-      this.documentKeys.set(Object.keys(data[0]?.documents[0]));
-      return data as Beneficiary[];
-    }),
+    map((data) => data as Beneficiary[]),
     shareReplay(1),
     catchError(this.handleError)
   );
-
-  documentKeys: WritableSignal<string[]> = signal([]);
   // Expose signals from this service with toSignal method that transforms observables into signals.
   beneficiarys = toSignal(this.beneficiarys$, { initialValue: [] as Beneficiary[] });
   selectedbeneficiary = signal<Beneficiary>({} as Beneficiary);

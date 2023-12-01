@@ -89,7 +89,15 @@ export class BeneficiaryListComponent {
     const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
 
     let objDoc = Object.create({} as Document);
-    this.bService.documentKeys().map((key, i) => {
+    const documentKeys = [
+      'id',
+      'documentType',
+      'desc',
+      'addedDate',
+      'updatedDate',
+    ]
+
+    documentKeys.map((key, i) => {
       objDoc[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '';
       if (key.includes('Date')) delete objDoc[key];
     });
