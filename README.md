@@ -7,7 +7,7 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 
 ## json-server
 
-Antes de subir o servidor de mock caso queira testar sem o uso da API é necessário realizar <br/> duas configurações bem simples: <br/>
+Antes de subir o servidor de mock caso queira testar sem o uso da API é necessário realizar <br/> duas configurações bem simples: <br/><br/>
 Certifique-se que para os dados serem apresentados em tela é necessário navegar <br/> ao service *BeneficiaryService* 
 e procurar pela propriedade `hasMock` e atribuir o valor *Booleano* `true`,  a fim <br/> do método checar e setar manualmente
 as seguintes porpriedades referente a data: `addedDate`, `updateDate`, os quais são setados na criação do recurso
