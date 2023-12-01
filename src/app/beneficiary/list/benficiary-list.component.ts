@@ -65,13 +65,15 @@ export class BeneficiaryListComponent {
   });
 
   // When a beneficiary is selected, emit the selected beneficiary name if it goes to detail
-  onSelected(bID: string | undefined): void {
-    if (bID === 'none') {
-      this.disableAccBtn = false;
-      this.registerDocs = [];
-      this.availableNumbers = Array.from({ length: 30 }, (_, index) => index + 1);
+  onSelected(bID: string): void {
+    if (bID) {
+      if (bID === 'none') {
+        this.disableAccBtn = false;
+        this.registerDocs = [];
+        this.availableNumbers = Array.from({ length: 30 }, (_, index) => index + 1);
+      }
+      this.bService.beneficiarySelected(bID as string);
     }
-    this.bService.beneficiarySelected(bID as string);
   }
 
   availableNumbers!: number[];

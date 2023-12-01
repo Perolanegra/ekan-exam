@@ -1,5 +1,5 @@
 export interface Beneficiary {
-  id?: string;
+  id: string;
   name: string;
   phone: string;
   birthDate: string | Date;
