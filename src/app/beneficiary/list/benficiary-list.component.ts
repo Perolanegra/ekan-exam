@@ -99,12 +99,10 @@ export class BeneficiaryListComponent {
     window.dispatchEvent(customEvent);
   }
 
-
-
   submitRegister(payload: Partial<Beneficiary>): void {
     this.triggerCustomEvent('deleteAccordeonProp');
-    console.log('submit Register on List component works with payload: ', payload);
-    // this.bService.createBeneficiary(payload);
+    this.bService.createBeneficiary(payload);
+    this.selectedBeneficiary().name = '';
   }
 
 }

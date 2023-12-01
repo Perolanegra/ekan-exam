@@ -78,22 +78,38 @@
   },
   "beneficiary": [
     {
-      "id": "b1",
-      "name": "Igor 2",
+      "name": "Igor Alves Da Silva",
       "phone": "61982803693",
-      "birthDate": "1996-08-25",
-      "addedDate": "2023-11-29",
-      "updateDate": "2023-11-29",
+      "birthDate": "2023-12-12",
       "documents": [
         {
-          "id": "doc-igor1",
-          "documentType": "Tipo do documento 2",
-          "desc": "descricao documentoddsa",
-          "addedDate": "2023-11-29",
-          "updatedDate": "2023-11-29",
-          "showAccordeon": true
+          "id": "doc-ref3",
+          "documentType": "dsa",
+          "desc": "das",
+          "addedDate": "2023-12-01T12:04:09.071Z",
+          "updatedDate": "2023-12-01T12:04:09.071Z"
         }
-      ]
+      ],
+      "addedDate": "2023-12-01T12:04:09.071Z",
+      "updateDate": "2023-12-01T12:04:09.071Z",
+      "id": 1
+    },
+    {
+      "name": "Felipe",
+      "phone": "61982803693",
+      "birthDate": "2023-12-13",
+      "documents": [
+        {
+          "id": "doc-ref17",
+          "documentType": "dsa",
+          "desc": "x",
+          "addedDate": "2023-12-01T12:13:30.526Z",
+          "updatedDate": "2023-12-01T12:13:30.526Z"
+        }
+      ],
+      "addedDate": "2023-12-01T12:13:30.526Z",
+      "updateDate": "2023-12-01T12:13:30.526Z",
+      "id": 2
     }
   ]
 }

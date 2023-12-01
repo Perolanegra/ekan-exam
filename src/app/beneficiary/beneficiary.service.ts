@@ -21,6 +21,7 @@ export class BeneficiaryService {
   private url = 'http://localhost:3000';
   http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
+  private hasMock = true;
 
   constructor() { }
   // First page of beneficiarys
@@ -71,13 +72,22 @@ export class BeneficiaryService {
     ).subscribe();
   }
 
-  createBeneficiary = (payload: Beneficiary): void => {
+  createBeneficiary = (payload: Partial<Beneficiary>): void => {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer your-access-token'
       })
     };
+
+    if (this.hasMock) {
+      payload.addedDate = new Date().toISOString()
+      payload.updateDate = new Date().toISOString()
+      payload.documents?.map(doc => {
+        doc.addedDate = new Date().toISOString();
+        doc.updatedDate = new Date().toISOString();
+      })
+    }
 
     this.http.post<any>(`${this.url}/beneficiary`, payload, httpOptions).pipe(
       map((response: Beneficiary) => response),
