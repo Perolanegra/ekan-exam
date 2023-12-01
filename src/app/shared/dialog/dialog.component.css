@@ -8,6 +8,10 @@
   opacity: 0;
 }
 
+.btn-add-disabled {
+  opacity: 0.2;
+}
+
 .modal.fade .modal-dialog {
   transform: unset;
 }

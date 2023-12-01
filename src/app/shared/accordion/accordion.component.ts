@@ -23,7 +23,10 @@ export class AccordionComponent {
   @Input()
   documents!: Document[];
 
-  toggleAccordion(doc: Document) {
+  toggleAccordion(doc: Document, isClosing?: boolean) {
+
+    console.log('document chega: ', doc);
+
     doc.showAccordeon = doc.showAccordeon ?? false;
     doc.showAccordeon = !doc.showAccordeon;
 
@@ -51,13 +54,14 @@ export class AccordionComponent {
     setTimeout(() => {
       this.renderer.setStyle(modalBody, 'pointer-events', 'unset');
       this.renderer.setStyle(modalBody, 'cursor', 'unset');
+      if (isClosing) delete doc.showAccordeon;
     }, 800);
 
   }
 
   @HostListener("window:resetAccordeonState")
   resetAccordeonState = () => {
-    this.documents?.map(doc => doc.showAccordeon ? this.toggleAccordion(doc) : '');
+    this.documents?.map(doc => doc.showAccordeon ? this.toggleAccordion(doc, true) : '');
   };
 
   updateFormValue(value: string, id: string, accordeonIndex: number): void {

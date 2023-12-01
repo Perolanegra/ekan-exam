@@ -4,6 +4,7 @@ import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { Beneficiary } from '../model/beneficiary';
+import { Document } from '../model/beneficiary';
 
 @Component({
   selector: 'beneficiary-list',
@@ -50,6 +51,9 @@ export class BeneficiaryListComponent {
   selectedBeneficiary = this.bService.selectedbeneficiary;
   inputControls = this.bService.inputControlsBeneficiary;
 
+  registerDocs: Document[] = [];
+  disableAccBtn: boolean = false;
+
   // Component signals
   beneficiaries = computed(() => {
     try {
@@ -60,9 +64,31 @@ export class BeneficiaryListComponent {
     }
   });
 
-  // When a beneficiary is selected, emit the selected beneficiary name
+  // When a beneficiary is selected, emit the selected beneficiary name if it goes to detail
   onSelected(bID: string | undefined): void {
+    if (bID === 'none') {
+      this.disableAccBtn = false;
+      this.registerDocs = [];
+      this.availableNumbers = Array.from({ length: 30 }, (_, index) => index + 1);
+    }
     this.bService.beneficiarySelected(bID as string);
+  }
+
+  availableNumbers!: number[];
+
+  addDocuments(): void {
+    // It was set on frontend the amount of documents a beneficiary can have
+    if (this.availableNumbers.length === 0) {
+      this.disableAccBtn = true;
+      return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * this.availableNumbers.length);
+    const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
+
+    let objDoc = Object.create({} as Document);
+    this.bService.documentKeys().map((key, i) => objDoc[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '');
+    this.registerDocs.push(objDoc);
   }
 
   hideAccordeonOnClosed(): void {

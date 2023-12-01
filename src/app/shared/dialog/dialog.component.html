@@ -7,7 +7,11 @@
   aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true"
 >
-  <form #myDialogForm="ngForm" (ngSubmit)="submit(myDialogForm.form)" novalidate>
+  <form
+    #myDialogForm="ngForm"
+    (ngSubmit)="submit(myDialogForm.form)"
+    novalidate
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -18,13 +22,20 @@
         <div class="modal-body">
           <div class="form-group" *ngFor="let item of controls()">
             <ng-container *ngIf="item.id !== 'id'; else myHiddenIdInput">
-              <label for="recipient-name" class="col-form-label"
+              <label
+                *ngIf="item.id !== 'addedDate' && item.id !== 'updateDate'"
+                for="recipient-name"
+                class="col-form-label"
                 >{{ item?.label }}:</label
               >
               <input
                 *ngIf="item.type !== 'textarea'; else myTextArea"
                 [type]="item.type"
                 class="form-control"
+                [ngClass]="{
+                  hideDialog:
+                    item.id === 'addedDate' || item.id === 'updateDate'
+                }"
                 [id]="item?.id"
                 [mask]="item.type === 'tel' ? '(00) 0 0000-0000' : ''"
                 required
@@ -60,6 +71,10 @@
           <div class="form-group mt-3 mb-3">
             <div class="list-group" *ngIf="addMode">
               <button
+                [disabled]="disableAccBtn"
+                [ngClass]="{
+                  'btn-add-disabled': disableAccBtn
+                }"
                 type="button"
                 class="list-group-item active"
                 (click)="addAccordeonElement()"
@@ -82,7 +97,9 @@
           >
             Cancelar
           </button>
-          <button type="submit" class="btn btn-primary">{{ addMode ? 'Enviar' : 'Atualizar' }}</button>
+          <button type="submit" class="btn btn-primary">
+            {{ addMode ? "Enviar" : "Atualizar" }}
+          </button>
         </div>
       </div>
     </div>

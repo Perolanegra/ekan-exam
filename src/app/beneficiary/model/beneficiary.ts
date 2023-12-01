@@ -14,5 +14,7 @@ export interface Document {
   desc: string;
   addedDate: string | Date;
   updatedDate: string | Date;
-  showAccordeon: boolean;
+  showAccordeon?: boolean;
 }
+
+

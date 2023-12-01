@@ -38,17 +38,19 @@ export class DialogComponent {
   @Input()
   headerText!: string;
 
+  @Input()
+  disableAccBtn!: boolean;
+
   @Output()
   canceled: EventEmitter<any> = new EventEmitter();
 
   @Output()
   submitted: EventEmitter<any> = new EventEmitter();
 
-  addAccordeonElement(): void {
-    // TODO: adicionar a lógica pra adicionar os accordeons de acordo com o dado passado do componente pai.
-    console.log('addAccordeonElement method works!');
-  }
+  @Output()
+  addAccordeon: EventEmitter<any> = new EventEmitter();
 
+  addAccordeonElement = (): void => this.addAccordeon.emit();
   cancelWasTriggered = () => this.canceled.emit();
 
   submit = (form: any) => {

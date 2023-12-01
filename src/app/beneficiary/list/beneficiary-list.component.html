@@ -36,14 +36,16 @@
     [controls]="inputControls"
     [selectedData]="selectedBeneficiary"
     addAccordeonBtnText="Adicionar Documento"
+    [disableAccBtn]="disableAccBtn"
     headerText="Cadastrar Beneficiário"
     [addMode]="true"
     (canceled)="hideAccordeonOnClosed()"
     (submitted)="submitRegister($event)"
+    (addAccordeon)="addDocuments()"
   >
     <app-accordion
       [controlsDoc]="controlsDoc"
-      [documents]="selectedBeneficiary().documents"
+      [documents]="registerDocs"
       [hideAccordion]="hideAccordion"
     ></app-accordion>
   </app-dialog>

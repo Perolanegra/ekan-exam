@@ -80,7 +80,7 @@
     {
       "id": "b1",
       "name": "Igor",
-      "phone": "619820803693",
+      "phone": "61982803693",
       "birthDate": "1996-08-25",
       "addedDate": "2023-11-29",
       "updateDate": "2023-11-29",
@@ -106,16 +106,14 @@
           "documentType": "novo doc 14",
           "desc": "nova desc45",
           "addedDate": "2023-11-30",
-          "updatedDate": "2023-11-30",
-          "showAccordeon": true
+          "updatedDate": "2023-11-30"
         },
         {
           "id": "doc-felipe2",
           "documentType": "novo tipo 2",
           "desc": "descricao documento2",
           "addedDate": "2023-11-30",
-          "updatedDate": "2023-11-30",
-          "showAccordeon": false
+          "updatedDate": "2023-11-30"
         }
       ],
       "id": "TCreRGk"
