@@ -13,13 +13,13 @@ e procurar pela propriedade `hasMock` e atribuir o valor *Booleano* `true`,  a f
 as seguintes porpriedades referente a data: `addedDate`, `updateDate`, <br/> os quais serão setados automaticamente na criação do recurso
 ao bater na api do Java quando o valor estiver `false`. <br/><br/>
 Também se certifique de alterar o valor da propriedade `url` do mesmo arquivo *BeneficiaryService* para `http://localhost:3000`, com o objetivo 
-da aplicação agora apontar para o json-server. Caso queira voltar, <br/> basta retornar o valor incialmente setado `http://localhost:8080` <br/><br/>
+da aplicação agora apontar para o json-server. Caso queira voltar, <br/> basta retornar o valor incialmente setado: `http://localhost:8080` <br/><br/>
 
 Pronto, agora só rodar o seguinte comando no terminal `npm run s:mock` para sua aplicação <br/> rodar na porta *3000* com o json-server.
 
 ## Servidor de Desenvolvimento (Angular)
 
-Para subir o servidor de desenvolvimento rode o seguinte comando `npm run start` e navegue para `http://localhost:4200/` na sua url do seu browser.
+Para subir o servidor de desenvolvimento rode o seguinte comando `npm run start` e navegue para `http://localhost:4200/` na url do seu browser.
 
 ## Build
 
