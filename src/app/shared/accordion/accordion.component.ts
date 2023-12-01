@@ -24,9 +24,6 @@ export class AccordionComponent {
   documents!: Document[];
 
   toggleAccordion(doc: Document, isClosing?: boolean) {
-
-    console.log('document chega: ', doc);
-
     doc.showAccordeon = doc.showAccordeon ?? false;
     doc.showAccordeon = !doc.showAccordeon;
 
@@ -62,6 +59,11 @@ export class AccordionComponent {
   @HostListener("window:resetAccordeonState")
   resetAccordeonState = () => {
     this.documents?.map(doc => doc.showAccordeon ? this.toggleAccordion(doc, true) : '');
+  };
+
+  @HostListener("window:deleteAccordeonProp")
+  deleteAccordeonProp = () => {
+    this.documents?.map(doc => delete doc.showAccordeon);
   };
 
   updateFormValue(value: string, id: string, accordeonIndex: number): void {

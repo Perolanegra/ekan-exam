@@ -1,8 +1,9 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, WritableSignal, signal } from '@angular/core';
 import { InputControls } from './model/controls';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { Document } from '../../beneficiary/model/beneficiary';
 
 @Component({
   selector: 'app-dialog',
@@ -41,6 +42,9 @@ export class DialogComponent {
   @Input()
   disableAccBtn!: boolean;
 
+  @Input()
+  documents!: Document[];
+
   @Output()
   canceled: EventEmitter<any> = new EventEmitter();
 
@@ -50,12 +54,24 @@ export class DialogComponent {
   @Output()
   addAccordeon: EventEmitter<any> = new EventEmitter();
 
-  addAccordeonElement = (): void => this.addAccordeon.emit();
+  addAccordeonElement = (formInstance: FormGroup): void => {
+    formInstance.controls['documents'] ? '' :
+      formInstance.addControl('documents', new FormControl(this.documents, Validators.required));
+    formInstance.removeControl('addedDate');
+    formInstance.removeControl('updateDate');
+    formInstance.removeControl('id');
+    this.addAccordeon.emit();
+  }
   cancelWasTriggered = () => this.canceled.emit();
 
-  submit = (form: any) => {
-    if (form.valid) {
-      this.submitted.emit(this.addMode ? form.value : '');
+  submit(formInstance: FormGroup) {
+    const documentsArray = formInstance.get('documents') as FormControl;
+    const fullfiled = documentsArray?.value.every((documentObj: any) =>
+      Object.values(documentObj).every((valor) => valor !== '')
+    );
+
+    if (fullfiled) {
+      this.submitted.emit(this.addMode ? formInstance.value : '');
       this.isActive.set(false);
     }
   }

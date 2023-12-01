@@ -39,7 +39,8 @@
     [disableAccBtn]="disableAccBtn"
     headerText="Cadastrar Beneficiário"
     [addMode]="true"
-    (canceled)="hideAccordeonOnClosed()"
+    [documents]="registerDocs"
+    (canceled)="triggerCustomEvent('resetAccordeonState')"
     (submitted)="submitRegister($event)"
     (addAccordeon)="addDocuments()"
   >

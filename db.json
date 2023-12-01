@@ -79,7 +79,7 @@
   "beneficiary": [
     {
       "id": "b1",
-      "name": "Igor",
+      "name": "Igor 2",
       "phone": "61982803693",
       "birthDate": "1996-08-25",
       "addedDate": "2023-11-29",
@@ -87,36 +87,13 @@
       "documents": [
         {
           "id": "doc-igor1",
-          "documentType": "Tipo do documento",
-          "desc": "descricao documento",
+          "documentType": "Tipo do documento 2",
+          "desc": "descricao documentoddsa",
           "addedDate": "2023-11-29",
-          "updatedDate": "2023-11-29"
+          "updatedDate": "2023-11-29",
+          "showAccordeon": true
         }
       ]
-    },
-    {
-      "name": "Gabriel Antunes da Silva",
-      "phone": "61982856543",
-      "birthDate": "1959-08-14",
-      "addedDate": "1959-08-05",
-      "updateDate": "1959-08-05",
-      "documents": [
-        {
-          "id": "doc-felipe1",
-          "documentType": "novo doc 14",
-          "desc": "nova desc45",
-          "addedDate": "2023-11-30",
-          "updatedDate": "2023-11-30"
-        },
-        {
-          "id": "doc-felipe2",
-          "documentType": "novo tipo 2",
-          "desc": "descricao documento2",
-          "addedDate": "2023-11-30",
-          "updatedDate": "2023-11-30"
-        }
-      ],
-      "id": "TCreRGk"
     }
   ]
 }

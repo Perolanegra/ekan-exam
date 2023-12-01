@@ -87,18 +87,24 @@ export class BeneficiaryListComponent {
     const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
 
     let objDoc = Object.create({} as Document);
-    this.bService.documentKeys().map((key, i) => objDoc[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '');
+    this.bService.documentKeys().map((key, i) => {
+      objDoc[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '';
+      if (key.includes('Date')) delete objDoc[key];
+    });
     this.registerDocs.push(objDoc);
   }
 
-  hideAccordeonOnClosed(): void {
-    const customEvent = new CustomEvent('resetAccordeonState');
+  triggerCustomEvent(eventName: string): void {
+    const customEvent = new CustomEvent(eventName);
     window.dispatchEvent(customEvent);
   }
 
+
+
   submitRegister(payload: Partial<Beneficiary>): void {
-    // TODO: fazer a lógica chamando o método que bate na api enviando payload do beneficiário.
+    this.triggerCustomEvent('deleteAccordeonProp');
     console.log('submit Register on List component works with payload: ', payload);
+    // this.bService.createBeneficiary(payload);
   }
 
 }

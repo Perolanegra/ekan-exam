@@ -9,8 +9,6 @@
 >
   <form
     #myDialogForm="ngForm"
-    (ngSubmit)="submit(myDialogForm.form)"
-    novalidate
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -36,9 +34,9 @@
                   hideDialog:
                     item.id === 'addedDate' || item.id === 'updateDate'
                 }"
+                required
                 [id]="item?.id"
                 [mask]="item.type === 'tel' ? '(00) 0 0000-0000' : ''"
-                required
                 [(ngModel)]="selectedData()[item.id]"
                 [ngModelOptions]="{
                   name: item.id ? item.id : ''
@@ -77,7 +75,7 @@
                 }"
                 type="button"
                 class="list-group-item active"
-                (click)="addAccordeonElement()"
+                (click)="addAccordeonElement(myDialogForm.form)"
               >
                 {{ addAccordeonBtnText }}
               </button>
@@ -97,7 +95,7 @@
           >
             Cancelar
           </button>
-          <button type="submit" class="btn btn-primary">
+          <button (click)="submit(myDialogForm.form)" class="btn btn-primary"> <!---->
             {{ addMode ? "Enviar" : "Atualizar" }}
           </button>
         </div>
