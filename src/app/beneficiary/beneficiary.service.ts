@@ -18,10 +18,10 @@ import { InputControls, InputControlDocuments } from '../shared/dialog/model/con
   providedIn: 'root'
 })
 export class BeneficiaryService {
-  private url = 'http://localhost:3000';
+  private url = 'http://localhost:8080';
   http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
-  private hasMock = true;
+  private hasMock = false;
 
   constructor() { }
   // First page of beneficiarys
@@ -43,10 +43,6 @@ export class BeneficiaryService {
     filter(Boolean),
     switchMap(beneficiary => of(beneficiary.documents))
   );
-
-  changeToMockURL(): void {
-    this.url = "https://localhost:3000";
-  }
 
   beneficiaryDocuments = toSignal<Document[], Document[]>(this.beneficiaryDocuments$, { initialValue: [] });
 

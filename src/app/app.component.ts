@@ -17,6 +17,6 @@ registerLocaleData(localePt);
   ]
 })
 export class AppComponent {
-  pageTitle = 'Avaliação EKAN';
+  pageTitle = 'Avaliação';
   bService = inject(BeneficiaryService);
 }

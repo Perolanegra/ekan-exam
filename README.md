@@ -3,15 +3,19 @@
 O projeto foi gerado na versão 17.0.0.
 Antes de rodar o servidor de desenvolvimento, baixar as dependencias do projeto.
 Certifique-se de estar usando a versão 18.18.0 do Nodejs.
-Rode a atualização de dependencias com o seguinte comando p/ garantir a equivalência do lock json: `npm ci`
+Rode a atualização de dependencias com o seguinte comando p/ garantir a equivalência do lock json file: `npm ci`
 
 ## json-server
 
-Caso queira testar o servidor com o mock rode o seguinte comando para subir o json server: `npm run s:mock`
+Antes de subir o servidor de mock caso queira testar sem o uso da API é necessário realizar duas configurações bem simples: <br/><br/>
 Certifique-se que para os dados serem apresentados em tela é necessário navegar <br/ > ao service *BeneficiaryService* 
 e procurar pela propriedade `hasMock` e atribuir o valor *Booleano* `true`, <br/> a fim do método checar e setar manualmente
 as seguintes porpriedades referente a data: `addedDate`, `updateDate`, os quais <br/> são setados na criação do recurso
-na api spring boot.
+na api spring boot. <br/><br/>
+Também se certifique de alterar o valor da propriedade `url` do mesmo arquivo *BeneficiaryService* para `http://localhost:3000`, com o objetivo 
+da aplicação agora apontar para o json-server. Caso queira voltar, só retornar o valor incialmente setado `http://localhost:8080` <br/><br/>
+
+Pronto, agora só rodar o seguinte comando no terminal `npm run s:mock` para sua aplicação rodar na porta *3000* com o json-server.
 
 ## Servidor de Desenvolvimento (Angular)
 
