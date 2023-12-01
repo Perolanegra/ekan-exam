@@ -8,14 +8,14 @@ Rode a atualização de dependencias com o seguinte comando <br/> p/ garantir a 
 ## json-server
 
 Antes de subir o servidor de mock caso queira testar sem o uso da API é necessário realizar duas configurações bem simples: <br/><br/>
-Certifique-se que para os dados serem apresentados em tela é necessário navegar <br/ > ao service *BeneficiaryService* 
-e procurar pela propriedade `hasMock` e atribuir o valor *Booleano* `true`, <br/> a fim do método checar e setar manualmente
-as seguintes porpriedades referente a data: `addedDate`, `updateDate`, os quais <br/> são setados na criação do recurso
+Certifique-se que para os dados serem apresentados em tela é necessário navegar <br/> ao service *BeneficiaryService* 
+e procurar pela propriedade `hasMock` e atribuir o valor *Booleano* `true`,  a fim <br/> do método checar e setar manualmente
+as seguintes porpriedades referente a data: `addedDate`, `updateDate`, os quais são setados na criação do recurso
 na api spring boot. <br/><br/>
 Também se certifique de alterar o valor da propriedade `url` do mesmo arquivo *BeneficiaryService* para `http://localhost:3000`, com o objetivo 
-da aplicação agora apontar para o json-server. Caso queira voltar, só retornar o valor incialmente setado `http://localhost:8080` <br/><br/>
+da aplicação agora apontar para o json-server. Caso queira voltar, <br/> basta retornar o valor incialmente setado `http://localhost:8080` <br/><br/>
 
-Pronto, agora só rodar o seguinte comando no terminal `npm run s:mock` para sua aplicação rodar na porta *3000* com o json-server.
+Pronto, agora só rodar o seguinte comando no terminal `npm run s:mock` para sua aplicação <br/> rodar na porta *3000* com o json-server.
 
 ## Servidor de Desenvolvimento (Angular)
 
