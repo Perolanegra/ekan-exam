@@ -42,12 +42,13 @@
     [documents]="registerDocs"
     (canceled)="triggerCustomEvent('resetAccordeonState')"
     (submitted)="submitRegister($event)"
-    (addAccordeon)="addDocuments()"
+    (addAccordeon)="addDocuments($event)"
   >
     <app-accordion
       [controlsDoc]="controlsDoc"
       [documents]="registerDocs"
       [hideAccordion]="hideAccordion"
+      [addMode]="true"
     ></app-accordion>
   </app-dialog>
 </ng-container>

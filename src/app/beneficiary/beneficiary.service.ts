@@ -80,6 +80,8 @@ export class BeneficiaryService {
       })
     }
 
+    payload.documents?.map((doc: Partial<Document>)  => delete doc.id);
+
     this.http.post<any>(`${this.url}/beneficiary`, payload, httpOptions).pipe(
       map((response: Beneficiary) => response),
       shareReplay(1),

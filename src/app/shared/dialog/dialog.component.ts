@@ -59,8 +59,7 @@ export class DialogComponent {
       formInstance.addControl('documents', new FormControl(this.documents, Validators.required));
     formInstance.removeControl('addedDate');
     formInstance.removeControl('updateDate');
-    formInstance.removeControl('id');
-    this.addAccordeon.emit();
+    this.addAccordeon.emit(true);
   }
   cancelWasTriggered = () => this.canceled.emit();
 
@@ -73,11 +72,11 @@ export class DialogComponent {
 
     if (this.addMode) {
       if (fullfiled) {
-        this.closeaAndEmit(formInstance.value)
+        this.closeaAndEmit(formInstance.value);
       }
     } else {
       if (formInstance.valid) {
-        this.closeaAndEmit(formInstance.value)
+        this.closeaAndEmit(formInstance.value);
       }
     }
 

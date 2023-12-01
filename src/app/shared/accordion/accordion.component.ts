@@ -23,6 +23,9 @@ export class AccordionComponent {
   @Input()
   documents!: Document[];
 
+  @Input()
+  addMode: boolean = false;
+
   toggleAccordion(doc: Document, isClosing?: boolean) {
     doc.showAccordeon = doc.showAccordeon ?? false;
     doc.showAccordeon = !doc.showAccordeon;
@@ -58,7 +61,7 @@ export class AccordionComponent {
 
   @HostListener("window:resetAccordeonState")
   resetAccordeonState = () => {
-    this.documents?.map(doc => doc.showAccordeon ? this.toggleAccordion(doc, true) : '');
+    this.documents?.map((doc: Partial<Document>) => doc.showAccordeon ? this.toggleAccordion(doc as Document, true) : '');
   };
 
   @HostListener("window:deleteAccordeonProp")

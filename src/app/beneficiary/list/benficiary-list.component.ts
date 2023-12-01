@@ -78,30 +78,32 @@ export class BeneficiaryListComponent {
 
   availableNumbers!: number[];
 
-  addDocuments(): void {
-    // It was set on frontend the amount of documents a beneficiary can have
-    if (this.availableNumbers.length === 0) {
-      this.disableAccBtn = true;
-      return;
+  addDocuments(evento: boolean): void {
+    if (evento) {
+      // It was set on frontend the amount of documents a beneficiary can have
+      if (this.availableNumbers.length === 0) {
+        this.disableAccBtn = true;
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * this.availableNumbers.length);
+      const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
+
+      let objDoc = Object.create({} as Document);
+      const documentKeys = [
+        'id',
+        'documentType',
+        'desc',
+        'addedDate',
+        'updatedDate',
+      ]
+
+      documentKeys.map((key, i) => {
+        objDoc[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '';
+        if (key.includes('Date')) delete objDoc[key];
+      });
+      this.registerDocs.push(objDoc);
     }
-
-    const randomIndex = Math.floor(Math.random() * this.availableNumbers.length);
-    const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
-
-    let objDoc = Object.create({} as Document);
-    const documentKeys = [
-      'id',
-      'documentType',
-      'desc',
-      'addedDate',
-      'updatedDate',
-    ]
-
-    documentKeys.map((key, i) => {
-      objDoc[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '';
-      if (key.includes('Date')) delete objDoc[key];
-    });
-    this.registerDocs.push(objDoc);
   }
 
   triggerCustomEvent(eventName: string): void {
