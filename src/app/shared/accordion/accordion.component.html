@@ -1,5 +1,5 @@
 <div
-  *ngFor="let docItem of documents; let i = index"
+  *ngFor="let docItem of selectedData; let i = index"
   class="accordion mt-2 mb-2"
   id="accordionExample"
 >
@@ -47,7 +47,7 @@
           }"
           [id]="item?.idDoc"
           [ngModel]="docItem[item.idDoc]"
-          (ngModelChange)="updateFormValue($event, item.idDoc, i)"
+          (ngModelChange)="updateFormValue(item.idDoc, $event, j)"
         />
 
         <ng-template #docTextArea>
@@ -56,7 +56,7 @@
             rows="3"
             [id]="item?.idDoc"
             [ngModel]="docItem[item.idDoc]"
-            (ngModelChange)="updateFormValue($event, item.idDoc, i)"
+            (ngModelChange)="updateFormValue(item.idDoc, $event, j)"
           ></textarea>
         </ng-template>
       </div>

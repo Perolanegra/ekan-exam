@@ -18,10 +18,10 @@ import { InputControls, InputControlDocuments } from '../shared/dialog/model/con
   providedIn: 'root'
 })
 export class BeneficiaryService {
-  private url = 'http://localhost:8080';
+  private url = 'http://localhost:3000';
   http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
-  private hasMock = false;
+  private hasMock = true;
 
   constructor() { }
   // First page of beneficiarys
@@ -73,7 +73,7 @@ export class BeneficiaryService {
 
     if (this.hasMock) {
       payload.addedDate = new Date().toISOString()
-      payload.updateDate = new Date().toISOString()
+      payload.updatedDate = new Date().toISOString()
       payload.documents?.map(doc => {
         doc.addedDate = new Date().toISOString();
         doc.updatedDate = new Date().toISOString();
@@ -159,7 +159,7 @@ export class BeneficiaryService {
       },
       {
         type: 'date',
-        id: 'updateDate',
+        id: 'updatedDate',
         className: '',
         label: 'Atualizado em',
       },

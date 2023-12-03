@@ -4,7 +4,7 @@ export interface Beneficiary {
   phone: string;
   birthDate: string | Date;
   addedDate?: string | Date;
-  updateDate?: string | Date;
+  updatedDate?: string | Date;
   documents: Document[];
 }
 

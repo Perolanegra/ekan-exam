@@ -7,7 +7,7 @@
         "phone": "619820803693",
         "birthDate": "1996-08-25",
         "addedDate": "2023-11-29",
-        "updateDate": "2023-11-29",
+        "updatedDate": "2023-11-29",
         "documents": [
           {
             "id": "doc-igor1",
@@ -24,7 +24,7 @@
         "phone": "71982457421",
         "birthDate": "2023-11-29",
         "addedDate": "2023-11-29",
-        "updateDate": "2023-11-29",
+        "updatedDate": "2023-11-29",
         "documents": [
           {
             "id": "doc-felipe1",
@@ -57,7 +57,7 @@
     "phone": "619820803693",
     "birthDate": "1996-08-25",
     "addedDate": "2023-11-29",
-    "updateDate": "2023-11-29"
+    "updatedDate": "2023-11-29"
   },
   "create": {
     "id": "b2",
@@ -65,7 +65,7 @@
     "phone": "71994741230",
     "birthDate": "1959-05-12",
     "addedDate": "2020-05-12",
-    "updateDate": "2023-11-30",
+    "updatedDate": "2023-11-30",
     "documents": [
       {
         "id": "doc-felipe1",
@@ -76,5 +76,26 @@
       }
     ]
   },
-  "beneficiary": []
+  "beneficiary": [
+    {
+      "name": "Igor Alves Da Silva",
+      "phone": "61982856543",
+      "birthDate": "2023-12-05",
+      "documents": [
+        {
+          "documentType": "x",
+          "addedDate": "2023-12-03T17:52:48.387Z",
+          "updatedDate": "2023-12-03T17:52:48.387Z"
+        },
+        {
+          "desc": "d",
+          "addedDate": "2023-12-03T17:52:48.387Z",
+          "updatedDate": "2023-12-03T17:52:48.387Z"
+        }
+      ],
+      "addedDate": "2023-12-03T17:52:48.387Z",
+      "updatedDate": "2023-12-03T17:52:48.387Z",
+      "id": 1
+    }
+  ]
 }

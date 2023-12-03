@@ -4,9 +4,7 @@
     <button
       [disabled]="showModalAdd()"
       class="pseudo-clicker"
-      (click)="
-        onSelected('none'); showModalAdd.set(true); hideAccordion.set(true)
-      "
+      (click)="onSelected('none'); showModalAdd.set(true)"
     ></button>
   </div>
 
@@ -31,24 +29,34 @@
 </div>
 
 <ng-container *ngIf="showModalAdd()">
-  <app-dialog
-    [isActive]="showModalAdd"
-    [controls]="inputControls"
-    [selectedData]="selectedBeneficiary"
-    addAccordeonBtnText="Adicionar Documento"
-    [disableAccBtn]="disableAccBtn"
-    headerText="Cadastrar Beneficiário"
-    [addMode]="true"
-    [documents]="registerDocs"
-    (canceled)="triggerCustomEvent('resetAccordeonState')"
-    (submitted)="submitRegister($event)"
-    (addAccordeon)="addDocuments($event)"
+  <form
+    #inputBeneficiaryForm="ngForm"
+    (ngSubmit)="onSubmit(inputBeneficiaryForm.form)"
+    novalidate
   >
-    <app-accordion
-      [controlsDoc]="controlsDoc"
-      [documents]="registerDocs"
-      [hideAccordion]="hideAccordion"
+    <app-dialog
+      [isActive]="showModalAdd"
+      [controls]="inputControls"
+      [selectedData]="selectedBeneficiary"
+      [dialogForm]="inputBeneficiaryForm.form"
+      addAccordeonBtnText="Adicionar Documento"
+      [disableAccBtn]="disableAccBtn"
+      [readOnlyControls]="controlsToRemove"
+      headerText="Cadastrar Beneficiário"
       [addMode]="true"
-    ></app-accordion>
-  </app-dialog>
+      (canceled)="showModalAdd.set(false); showAccordeon = false"
+      (addAccordeon)="addDocuments(inputBeneficiaryForm.form)"
+    >
+      <ng-container *ngIf="showAccordeon">
+        <app-accordion
+          [controlsDoc]="controlsDoc"
+          [accordeonForm]="inputBeneficiaryForm.form"
+          [readOnlyControls]="controlsToRemove"
+          [selectedData]="selectedBeneficiary().documents"
+          accordeonControlName='documents'
+          [addMode]="true"
+        ></app-accordion>
+      </ng-container>
+    </app-dialog>
+  </form>
 </ng-container>

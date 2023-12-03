@@ -4,11 +4,12 @@ import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { FormGroup, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'beneficiary-detail',
   standalone: true,
-  imports: [NgFor, NgIf, DialogComponent, AccordionComponent, DatePipe, NgClass, NgxMaskDirective, NgxMaskPipe],
+  imports: [NgFor, NgIf, DialogComponent, AccordionComponent, DatePipe, NgClass, NgxMaskDirective, NgxMaskPipe, FormsModule],
   templateUrl: './beneficiary-detail.component.html',
   providers: [
     provideNgxMask()
@@ -45,25 +46,24 @@ export class BeneficiaryDetailComponent {
   errorMessage = '';
   beneficiaryService = inject(BeneficiaryService);
   showModal = signal(false);
-  hideAccordion = signal(true);
 
   // Signals used in the template
   selectedBeneficiary = this.beneficiaryService.selectedbeneficiary;
   beneficiaryDocuments = this.beneficiaryService.beneficiaryDocuments;
   inputControls = this.beneficiaryService.inputControlsBeneficiary;
   controlsDoc = this.beneficiaryService.inputControlsDocs;
+  controlsToRemove = ['addedDate', 'updatedDate'];
 
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
 
-  hideAccordeonOnClosed(): void {
-    const customEvent = new CustomEvent('resetAccordeonState');
-    window.dispatchEvent(customEvent);
-  }
+  onSubmit(formInstance: FormGroup) {
+    console.log('chego no edit submitted: ', formInstance.value);
+    if(formInstance.valid) {
+      this.showModal.set(false);
 
-  updateBeneficiary(): void {
-    this.selectedBeneficiary().documents = this.beneficiaryDocuments();
-    this.hideAccordeonOnClosed();
-    this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
+    }
+    // this.selectedBeneficiary().documents = this.beneficiaryDocuments();
+    // this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
   }
 
   removeBeneficiary(idBeneficiary: string | undefined): void {
