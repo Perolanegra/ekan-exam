@@ -64,6 +64,7 @@ export class DialogComponent {
   removeDateControls(formInstance: FormGroup) {
     formInstance.removeControl('addedDate');
     formInstance.removeControl('updateDate');
+    this.addMode ? formInstance.removeControl('id') : '';
   }
 
   cancelWasTriggered = () => this.canceled.emit();
@@ -74,8 +75,10 @@ export class DialogComponent {
       Object.values(documentObj).every((valor) => valor !== '')
     );
 
-    if (this.addMode && fullfiled) {
-      this.closeaAndEmit(formInstance.value);
+    if (this.addMode && documentsArray) {
+      if (fullfiled) {
+        this.closeaAndEmit(formInstance.value);
+      }
     } else {
       this.removeDateControls(formInstance);
       if (formInstance.valid) {

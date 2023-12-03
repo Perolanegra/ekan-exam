@@ -8,7 +8,7 @@
   aria-hidden="true"
 >
   <form
-    #myDialogForm="ngForm"
+    #myModalForm="ngForm"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -75,7 +75,7 @@
                 }"
                 type="button"
                 class="list-group-item active"
-                (click)="addAccordeonElement(myDialogForm.form)"
+                (click)="addAccordeonElement(myModalForm.form)"
               >
                 {{ addAccordeonBtnText }}
               </button>
@@ -95,7 +95,7 @@
           >
             Cancelar
           </button>
-          <button type="button" (click)="submit(myDialogForm.form)" class="btn btn-primary"> <!---->
+          <button type="button" (click)="submit(myModalForm.form)" class="btn btn-primary"> <!---->
             {{ addMode ? "Enviar" : "Atualizar" }}
           </button>
         </div>
