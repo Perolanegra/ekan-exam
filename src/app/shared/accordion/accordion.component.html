@@ -47,7 +47,7 @@
           }"
           [id]="item?.idDoc"
           [ngModel]="docItem[item.idDoc]"
-          (ngModelChange)="updateFormValue(item.idDoc, $event, j)"
+          (ngModelChange)="updateFormValue(item.idDoc, $event, i, docItem)"
         />
 
         <ng-template #docTextArea>
@@ -56,7 +56,7 @@
             rows="3"
             [id]="item?.idDoc"
             [ngModel]="docItem[item.idDoc]"
-            (ngModelChange)="updateFormValue(item.idDoc, $event, j)"
+            (ngModelChange)="updateFormValue(item.idDoc, $event, i, docItem)"
           ></textarea>
         </ng-template>
       </div>

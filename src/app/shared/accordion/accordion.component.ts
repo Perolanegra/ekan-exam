@@ -11,6 +11,7 @@ import {
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
 import {
+  AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
@@ -60,33 +61,68 @@ export class AccordionComponent implements AfterContentInit {
     this.selectedData?.map((doc) => {
       const newDoc: any = {};
 
-      if (!this.addMode) {
-        Object.keys(doc)?.forEach((key) => {
-          if (!this.readOnlyControls.includes(key)) {
-            newDoc[key] = doc[key];
-          }
-        });
-      }
+      Object.keys(doc)?.forEach((key) => {
+        if (!this.readOnlyControls.includes(key)) {
+          newDoc[key] = doc[key];
+        }
+      });
 
-      (formInstance?.controls[this.accordeonControlName] as FormArray)?.push(
-        new FormControl(this.addMode ? null : newDoc, Validators.required)
+      this.items?.push(new FormControl(newDoc, Validators.required));
+    });
+
+    this.items.setErrors({ incorrect: true });
+  }
+
+  get items() {
+    return this.accordeonForm.get(this.accordeonControlName) as FormArray;
+  }
+
+  setErrorState(): void {
+    ((this.items as FormArray).value as []).map((inputControls) => {
+      Object.keys(inputControls).forEach((inputKey) =>
+        !inputControls[inputKey]
+          ? this.items.setErrors({ incorrect: true })
+          : ''
       );
     });
   }
 
-  updateFormValue = (keyControl: string, value: any, index: number) => {
-    console.log('keyControl', keyControl);
-    console.log('value', value);
-
+  updateFormValue = (
+    keyControl: string,
+    value: any,
+    index: number,
+    docItem: Document
+  ) => {
     if (this.addMode) {
-      // TODO: preciso setar o novo valor.
-      // (this.accordeonForm?.controls['documents'] as FormArray).setValue([ { [keyControl]: value } ])
-      // (this.accordeonForm?.controls['documents'] as FormArray)[index] = { [keyControl]: value };
+      let indexItem!: AbstractControl;
+      indexItem = this.items.at(index);
+
+      const newVal = { [keyControl]: value };
+      let stored: any = JSON.parse(JSON.stringify(indexItem.value));
+
+      Object?.keys(this.items.value)
+        .filter((key) => key !== keyControl)
+        .map((keyFiltered) => {
+          if (this.items.at(index) == null) {
+            const novoObj: any = {};
+            novoObj[keyControl] = '';
+            novoObj[keyFiltered] = '';
+            this.items.push(new FormControl(novoObj, Validators.required));
+          } else {
+            if (this.items.at(index).value[keyFiltered] === '') {
+              stored[keyFiltered] = '';
+            } else {
+              stored[keyControl] = this.items.at(index).value[keyControl];
+            }
+            this.items.at(index).setValue({ ...stored, ...newVal });
+          }
+        });
+
+      this.setErrorState();
+      console.log('this.items: ', this.items);
+      console.log('indexItem: ', indexItem);
     }
-
-    // console.log('ok: ', (this.accordeonForm?.controls['documents'] as FormArray)?.get(keyControl)?.value);
-
-  }
+  };
 
   toggleAccordion(doc: Document, isClosing?: boolean): void {
     doc.showAccordeon = doc.showAccordeon ?? false;
