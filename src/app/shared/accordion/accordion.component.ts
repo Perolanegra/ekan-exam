@@ -77,51 +77,24 @@ export class AccordionComponent implements AfterContentInit {
     return this.accordeonForm.get(this.accordeonControlName) as FormArray;
   }
 
-  setErrorState(): void {
+  setErrorState(index: number): void {
     ((this.items as FormArray).value as []).map((inputControls) => {
-      Object.keys(inputControls).forEach((inputKey) =>
-        !inputControls[inputKey]
-          ? this.items.setErrors({ incorrect: true })
-          : ''
-      );
+      Object?.keys(inputControls).forEach((inputKey) => {
+        if (!this.items.value[index][inputKey]) {
+          // engloba valores falsos e a a ausencia da prop em um novo indice
+          this.items.setErrors({ incorrect: true });
+        }
+      });
     });
   }
 
-  updateFormValue = (
-    keyControl: string,
-    value: any,
-    index: number,
-    docItem: Document
-  ) => {
-    if (this.addMode) {
-      let indexItem!: AbstractControl;
-      indexItem = this.items.at(index);
+  updateFormValue = (keyControl: string, value: any, index: number) => {
+    const valueToSpread = { [keyControl]: value };
+    this.items
+      .at(index)
+      .setValue({ ...this.items.value[index], ...valueToSpread });
 
-      const newVal = { [keyControl]: value };
-      let stored: any = JSON.parse(JSON.stringify(indexItem.value));
-
-      Object?.keys(this.items.value)
-        .filter((key) => key !== keyControl)
-        .map((keyFiltered) => {
-          if (this.items.at(index) == null) {
-            const novoObj: any = {};
-            novoObj[keyControl] = '';
-            novoObj[keyFiltered] = '';
-            this.items.push(new FormControl(novoObj, Validators.required));
-          } else {
-            if (this.items.at(index).value[keyFiltered] === '') {
-              stored[keyFiltered] = '';
-            } else {
-              stored[keyControl] = this.items.at(index).value[keyControl];
-            }
-            this.items.at(index).setValue({ ...stored, ...newVal });
-          }
-        });
-
-      this.setErrorState();
-      console.log('this.items: ', this.items);
-      console.log('indexItem: ', indexItem);
-    }
+    this.setErrorState(index);
   };
 
   toggleAccordion(doc: Document, isClosing?: boolean): void {

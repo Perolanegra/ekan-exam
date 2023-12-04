@@ -57,13 +57,11 @@ export class BeneficiaryDetailComponent {
   pageTitle = computed(() => this.selectedBeneficiary() ? `Detalhes do Beneficiário: ${this.selectedBeneficiary()?.name}` : '');
 
   onSubmit(formInstance: FormGroup) {
-    console.log('chego no edit submitted: ', formInstance.value);
     if(formInstance.valid) {
       this.showModal.set(false);
-
+      this.selectedBeneficiary().documents = this.beneficiaryDocuments();
+      this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
     }
-    // this.selectedBeneficiary().documents = this.beneficiaryDocuments();
-    // this.beneficiaryService.updateBeneficiary(this.selectedBeneficiary());
   }
 
   removeBeneficiary(idBeneficiary: string | undefined): void {

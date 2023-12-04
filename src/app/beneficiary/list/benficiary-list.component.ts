@@ -133,12 +133,6 @@ export class BeneficiaryListComponent {
   }
 
   onSubmit(formInstance: FormGroup): void {
-
-    console.log('cheguei submit list: ', formInstance);
-
-    console.log('documents submit: ', formInstance.get('documents'));
-
-
     if (formInstance.valid) {
       this.showModalAdd.set(false);
       this.showAccordeon = true;

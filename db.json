@@ -78,23 +78,25 @@
   },
   "beneficiary": [
     {
-      "name": "Igor Alves Da Silva",
+      "name": "Gabriel Silva ss",
       "phone": "61982856543",
-      "birthDate": "2023-12-05",
+      "birthDate": "2023-12-06",
       "documents": [
         {
           "documentType": "x",
-          "addedDate": "2023-12-03T17:52:48.387Z",
-          "updatedDate": "2023-12-03T17:52:48.387Z"
+          "desc": "d",
+          "addedDate": "2023-12-04T13:51:34.962Z",
+          "updatedDate": "2023-12-04T13:51:34.962Z"
         },
         {
-          "desc": "d",
-          "addedDate": "2023-12-03T17:52:48.387Z",
-          "updatedDate": "2023-12-03T17:52:48.387Z"
+          "desc": "dsadsa",
+          "documentType": "aaa",
+          "addedDate": "2023-12-04T13:51:34.962Z",
+          "updatedDate": "2023-12-04T13:51:34.962Z"
         }
       ],
-      "addedDate": "2023-12-03T17:52:48.387Z",
-      "updatedDate": "2023-12-03T17:52:48.387Z",
+      "addedDate": "2023-12-04T13:51:34.962Z",
+      "updatedDate": "2023-12-04T13:51:34.962Z",
       "id": 1
     }
   ]
