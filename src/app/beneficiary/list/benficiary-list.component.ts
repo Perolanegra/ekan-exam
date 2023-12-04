@@ -3,7 +3,6 @@ import { NgFor, NgClass, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
-import { Beneficiary } from '../model/beneficiary';
 import { Document } from '../model/beneficiary';
 import {
   FormArray,

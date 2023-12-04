@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { DestroyRef, Injectable, inject, signal, WritableSignal } from '@angular/core';
+import { DestroyRef, Injectable, inject, signal } from '@angular/core';
 import {
   catchError,
   filter,

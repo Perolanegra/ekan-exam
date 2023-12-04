@@ -5,22 +5,18 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   WritableSignal,
   signal,
 } from '@angular/core';
 import { InputControls } from './model/controls';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
-  NgForm,
   Validators,
 } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { Document } from '../../beneficiary/model/beneficiary';
 
 @Component({
   selector: 'app-dialog',

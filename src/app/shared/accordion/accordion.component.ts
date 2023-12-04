@@ -5,13 +5,11 @@ import {
   Renderer2,
   Input,
   WritableSignal,
-  HostListener,
   AfterContentInit,
 } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
 import {
-  AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
