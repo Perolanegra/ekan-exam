@@ -70,11 +70,11 @@ export class AccordionComponent implements AfterContentInit {
       this.items?.push(new FormControl(newDoc, Validators.required));
     });
 
-    this.items.setErrors({ incorrect: true });
+    this.items?.setErrors({ incorrect: true });
   }
 
   get items() {
-    return this.accordeonForm.get(this.accordeonControlName) as FormArray;
+    return this.accordeonForm?.get(this.accordeonControlName) as FormArray;
   }
 
   setErrorState(index: number): void {

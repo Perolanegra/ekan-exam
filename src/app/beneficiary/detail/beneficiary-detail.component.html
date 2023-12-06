@@ -91,7 +91,14 @@
       headerText="Atualizar Beneficiário"
       (canceled)="showModal.set(false)"
     >
-      <app-accordion [controlsDoc]="controlsDoc"></app-accordion>
+      <app-accordion
+      [controlsDoc]="controlsDoc"
+      [accordeonForm]="editBeneficiaryForm.form"
+      [readOnlyControls]="controlsToRemove"
+      [selectedData]="selectedBeneficiary().documents"
+      accordeonControlName='documents'
+      >
+    </app-accordion>
     </app-dialog>
   </form>
 </ng-container>
