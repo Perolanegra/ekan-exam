@@ -6,6 +6,7 @@ import {
   Input,
   WritableSignal,
   AfterContentInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
@@ -23,6 +24,7 @@ import {
   standalone: true,
   imports: [NgClass, NgFor, NgIf, FormsModule],
   styleUrls: ['./accordion.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccordionComponent implements AfterContentInit {
   private renderer = inject(Renderer2);

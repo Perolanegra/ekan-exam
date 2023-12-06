@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
@@ -14,6 +14,7 @@ import { FormGroup, FormsModule } from '@angular/forms';
   providers: [
     provideNgxMask()
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `.box-docs {
       display: flex;

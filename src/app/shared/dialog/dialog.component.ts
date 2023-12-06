@@ -2,6 +2,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -25,6 +26,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
   imports: [NgClass, NgFor, NgIf, FormsModule, NgxMaskDirective, NgxMaskPipe],
   providers: [provideNgxMask()],
   styleUrls: ['./dialog.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogComponent implements AfterContentInit {
   constructor() {}

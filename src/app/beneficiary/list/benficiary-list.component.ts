@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
@@ -54,6 +54,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BeneficiaryListComponent {
   pageTitle = 'Beneficiários';

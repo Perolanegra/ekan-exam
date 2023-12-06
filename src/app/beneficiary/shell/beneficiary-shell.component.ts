@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BeneficiaryListComponent } from "../list/benficiary-list.component";
 import { BeneficiaryDetailComponent } from "../detail/beneficiary-detail.component";
 import { NgIf } from '@angular/common';
@@ -16,7 +16,8 @@ import { NgIf } from '@angular/common';
     </div>
 </div>
   `,
-  imports: [BeneficiaryListComponent, BeneficiaryDetailComponent, NgIf]
+  imports: [BeneficiaryListComponent, BeneficiaryDetailComponent, NgIf],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BeneficiaryShellComponent {
 
