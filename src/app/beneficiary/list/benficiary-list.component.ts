@@ -32,7 +32,6 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     NgxMaskDirective,
     NgxMaskPipe,
   ],
-  // providers: [BeneficiaryService],
   templateUrl: './beneficiary-list.component.html',
   styles: [
     `

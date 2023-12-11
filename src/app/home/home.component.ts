@@ -11,11 +11,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         flex-direction: column;
         margin-top: 35px;
       }
-    `
+    `,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
   public pageTitle = 'Bem vindo ao EKAN Exame';
-
 }

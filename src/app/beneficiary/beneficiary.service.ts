@@ -74,7 +74,7 @@ export class BeneficiaryService {
     toObservable(this._selectedbeneficiary).pipe(
       distinctUntilChanged(),
       filterNullish<any>(),
-      // takeUntilDestroyed(this.destroyRef),
+      takeUntilDestroyed(this.destroyRef),
       switchMap((foundbeneficiary: Beneficiary) => of(foundbeneficiary))
     ),
     { initialValue: {} as Beneficiary, manualCleanup: true }
