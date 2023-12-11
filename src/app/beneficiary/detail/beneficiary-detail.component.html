@@ -1,7 +1,11 @@
-<div class="card" *ngIf="selectedBeneficiary().id">
+<div class="card" *ngIf="selectedBeneficiary()?.id">
   <div class="card-header">
     {{ pageTitle() }}
-    <div (click)="removeBeneficiary(selectedBeneficiary().id)" class="remove-icon" alt="Remove Icon"></div>
+    <div
+      (click)="removeBeneficiary(selectedBeneficiary().id)"
+      class="remove-icon"
+      alt="Remove Icon"
+    ></div>
   </div>
 
   <div class="card-body">
@@ -9,36 +13,47 @@
       <div class="col-md-3">Nome:</div>
       <div class="col-md-6">{{ selectedBeneficiary().name }}</div>
       <div class="col-md-3">
-        <button [disabled]="showModal()" class="btn btn-primary" (click)="hideAccordion.set(true); showModal.set(!showModal()); ">
+        <button
+          [disabled]="showModal()"
+          class="btn btn-primary"
+          (click)="showModal.set(!showModal())"
+        >
           Atualizar
         </button>
       </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Telefone:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().phone | mask: '(00) 0 0000-0000' }}</div>
+      <div class="col-md-6">
+        {{ selectedBeneficiary().phone | mask : "(00) 0 0000-0000" }}
+      </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Nascimento:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().birthDate | date : 'short' : '' : 'pt-BR' }}</div>
+      <div class="col-md-6">
+        {{ selectedBeneficiary().birthDate | date : "short" : "" : "pt-BR" }}
+      </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Inclusão em:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().addedDate | date : 'short' : '' : 'pt-BR' }}</div>
+      <div class="col-md-6">
+        {{ selectedBeneficiary().addedDate | date : "short" : "" : "pt-BR" }}
+      </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Atualizado em:</div>
-      <div class="col-md-6">{{ selectedBeneficiary().updateDate | date : 'short' : '' : 'pt-BR' }}</div>
+      <div class="col-md-6">
+        {{ selectedBeneficiary().updatedDate | date : "short" : "" : "pt-BR" }}
+      </div>
     </div>
 
-    <div class="row mt-2 mb-1" *ngIf="beneficiaryDocuments()">
+    <div class="row mt-2 mb-1" *ngIf="selectedBeneficiary()?.documents">
       <div class="col-md-3">Documentos:</div>
       <div class="col-md-6 box-docs">
         <ul
           class="list-group mt-1 mb-1"
-          *ngFor="let document of beneficiaryDocuments()"
+          *ngFor="let document of selectedBeneficiary()?.documents"
         >
-          <li class="list-group-item"><span>ID</span>: {{ document.id }}</li>
           <li class="list-group-item">
             <span>Descrição</span>: {{ document.desc }}
           </li>
@@ -46,10 +61,14 @@
             <span>Tipo</span>: {{ document.documentType }}
           </li>
           <li class="list-group-item">
-            <span>Inclusão em</span>: {{ (document.addedDate | date : 'short' : 'pt-BR')?.substr(0, 10) }}
+            <span>Inclusão em</span>:
+            {{ (document.addedDate | date : "short" : "pt-BR")?.substr(0, 10) }}
           </li>
           <li class="list-group-item">
-            <span>Atualizado em</span>: {{ (document.updatedDate | date : 'short' : 'pt-BR')?.substr(0, 10) }}
+            <span>Atualizado em</span>:
+            {{
+              (document.updatedDate | date : "short" : "pt-BR")?.substr(0, 10)
+            }}
           </li>
         </ul>
       </div>
@@ -57,17 +76,29 @@
   </div>
 </div>
 
-<app-dialog
-  [isActive]="showModal"
-  [controls]="inputControls"
-  [selectedData]="selectedBeneficiary"
-  headerText="Atualizar Beneficiário"
-  (canceled)="hideAccordeonOnClosed()"
-  (submitted)="updateBeneficiary()"
->
-  <app-accordion
-    [controlsDoc]="controlsDoc"
-    [documents]="selectedBeneficiary().documents"
-    [hideAccordion]="hideAccordion"
-  ></app-accordion>
-</app-dialog>
+<ng-container *ngIf="showModal()">
+  <form
+    #editBeneficiaryForm="ngForm"
+    (ngSubmit)="onSubmit(editBeneficiaryForm.form)"
+    novalidate
+  >
+    <app-dialog
+      [isActive]="showModal"
+      [controls]="inputControls"
+      [dialogForm]="editBeneficiaryForm.form"
+      [selectedData]="selectedBeneficiary"
+      [readOnlyControls]="controlsToRemove"
+      headerText="Atualizar Beneficiário"
+      (canceled)="showModal.set(false)"
+    >
+      <app-accordion
+        [controlsDoc]="controlsDoc"
+        [accordeonForm]="editBeneficiaryForm.form"
+        [readOnlyControls]="controlsToRemove"
+        [selectedData]="selectedBeneficiary().documents"
+        accordeonControlName="documents"
+      >
+      </app-accordion>
+    </app-dialog>
+  </form>
+</ng-container>

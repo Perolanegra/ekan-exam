@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -11,10 +11,10 @@ import { Component } from '@angular/core';
         flex-direction: column;
         margin-top: 35px;
       }
-    `
-  ]
+    `,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
   public pageTitle = 'Bem vindo ao EKAN Exame';
-
 }

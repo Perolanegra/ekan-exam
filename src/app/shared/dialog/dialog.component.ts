@@ -1,23 +1,35 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output, WritableSignal, signal } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  Signal,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import { InputControls } from './model/controls';
-import { FormControl, FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { Document } from '../../beneficiary/model/beneficiary';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, FormsModule, NgxMaskDirective, NgxMaskPipe],
-  providers: [
-    provideNgxMask()
-  ],
-  styleUrls: ['./dialog.component.css']
+  providers: [provideNgxMask()],
+  styleUrls: ['./dialog.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogComponent {
-
-  constructor() { }
+export class DialogComponent implements AfterContentInit {
+  constructor() {}
 
   removeAccentuationReg = /[\u0300-\u036f]/g;
 
@@ -25,10 +37,10 @@ export class DialogComponent {
   isActive = signal(false);
 
   @Input()
-  controls!: WritableSignal<InputControls[]>
+  controls!: WritableSignal<InputControls[]>;
 
   @Input()
-  selectedData!: WritableSignal<any>;
+  selectedData!: Signal<any>;
 
   @Input()
   addMode: boolean = false;
@@ -43,54 +55,39 @@ export class DialogComponent {
   disableAccBtn!: boolean;
 
   @Input()
-  documents!: Document[];
+  dialogForm!: FormGroup;
+
+  @Input()
+  readOnlyControls!: string[];
 
   @Output()
   canceled: EventEmitter<any> = new EventEmitter();
 
   @Output()
-  submitted: EventEmitter<any> = new EventEmitter();
-
-  @Output()
   addAccordeon: EventEmitter<any> = new EventEmitter();
 
-  addAccordeonElement = (formInstance: FormGroup): void => {
-    formInstance.controls['documents'] ? '' :
-      formInstance.addControl('documents', new FormControl(this.documents, Validators.required));
-    this.removeDateControls(formInstance);
-    this.addAccordeon.emit(true);
+  ngAfterContentInit(): void {
+    this.addControls(this.dialogForm);
   }
 
-  removeDateControls(formInstance: FormGroup) {
-    formInstance.removeControl('addedDate');
-    formInstance.removeControl('updateDate');
-    this.addMode ? formInstance.removeControl('id') : '';
+  addAccordeonElement = (): void => this.addAccordeon.emit();
+
+  updateDialogFormValue = (keyControl: string, value: any) =>
+    this.dialogForm.get(keyControl)?.setValue(value);
+
+  addControls(formInstance: FormGroup): void {
+    this.controls().map((inputControl) => {
+      if (!this.readOnlyControls.includes(inputControl.id)) {
+        formInstance?.addControl(
+          inputControl.id,
+          new FormControl(
+            this.selectedData()[inputControl.id],
+            Validators.required
+          )
+        );
+      }
+    });
   }
 
   cancelWasTriggered = () => this.canceled.emit();
-
-  submit(formInstance: FormGroup) {
-    const documentsArray = formInstance.get('documents') as FormControl;
-    const fullfiled = documentsArray?.value.every((documentObj: any) =>
-      Object.values(documentObj).every((valor) => valor !== '')
-    );
-
-    if (this.addMode && documentsArray) {
-      if (fullfiled) {
-        this.closeaAndEmit(formInstance.value);
-      }
-    } else {
-      this.removeDateControls(formInstance);
-      if (formInstance.valid) {
-        this.closeaAndEmit(formInstance.value);
-      }
-    }
-
-  }
-
-  private closeaAndEmit(formValue: any) {
-    this.submitted.emit(formValue);
-    this.isActive.set(false);
-  }
-
 }

@@ -5,8 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "s:mock": "json-server --watch db.json",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
+    "explore": "source-map-explorer dist/ek-beneficiary/browser/main.*.js",
     "test": "ng test"
   },
   "engines": {
