@@ -1,5 +1,15 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { DestroyRef, Injectable, inject, signal } from '@angular/core';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import {
+  DestroyRef,
+  EventEmitter,
+  Injectable,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   catchError,
   filter,
@@ -8,14 +18,47 @@ import {
   of,
   shareReplay,
   switchMap,
-  throwError
+  throwError,
+  OperatorFunction,
+  UnaryFunction,
+  pipe,
+  distinctUntilChanged,
+  BehaviorSubject,
 } from 'rxjs';
-import { toSignal, toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  toSignal,
+  toObservable,
+  takeUntilDestroyed,
+} from '@angular/core/rxjs-interop';
 import { Document, Beneficiary } from './model/beneficiary';
-import { InputControls, InputControlDocuments } from '../shared/dialog/model/controls';
+import {
+  InputControls,
+  InputControlDocuments,
+} from '../shared/dialog/model/controls';
+
+/**
+ * Operador customizado para RxJs que garante que apenas stream
+ * de dado válido chegue ao `next`.
+ *
+ * Filtra observable com valor `null` ou `undefined` e evita que stream
+ * de dado prossiga caso valor seja filtrado.
+ *
+ * @returns Observable de valor que não seja `null` e nem `undefined`.
+ */
+export function filterNullish<T>(): UnaryFunction<
+  Observable<T | null | undefined>,
+  Observable<T>
+> {
+  return pipe(
+    filter((value) => value != null) as OperatorFunction<
+      T | null | undefined,
+      T
+    >
+  );
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BeneficiaryService {
   private url = 'http://localhost:3000';
@@ -23,44 +66,36 @@ export class BeneficiaryService {
   private destroyRef = inject(DestroyRef);
   private hasMock = true;
 
-  constructor() { }
-  // First page of beneficiarys
-  private beneficiarys$ = this.http.get<Beneficiary[]>(`${this.url}/beneficiary`).pipe(
-    map((data) => data as Beneficiary[]),
-    shareReplay(1),
-    catchError(this.handleError)
-  );
-  // Expose signals from this service with toSignal method that transforms observables into signals.
-  beneficiarys = toSignal(this.beneficiarys$, { initialValue: [] as Beneficiary[] });
-  selectedbeneficiary = signal<Beneficiary>({} as Beneficiary);
+  public readonly beneficiary = signal<any>({} as Beneficiary);
+  public readonly selectedbeneficiary = signal<any>({} as Beneficiary);
+
+  getBeneficiaries(): Observable<any> {
+    return this.http.get<Beneficiary[]>(`${this.url}/beneficiary`).pipe(
+      map((data) => data as Beneficiary[]),
+      shareReplay(1),
+      catchError(this.handleError)
+    );
+  }
 
   private beneficiaryDocuments$ = toObservable(this.selectedbeneficiary).pipe(
     filter(Boolean),
-    switchMap(beneficiary => of(beneficiary.documents))
+    switchMap((beneficiary) => of(beneficiary.documents))
   );
 
-  beneficiaryDocuments = toSignal<Document[], Document[]>(this.beneficiaryDocuments$, { initialValue: [] });
+  beneficiaryDocuments = toSignal<Document[], Document[]>(
+    this.beneficiaryDocuments$,
+    { initialValue: [] }
+  );
 
   beneficiarySelected(bId: string): void {
     if (bId) {
-      const foundbeneficiary = this.beneficiarys().find((b) => b.id === bId);
-      this.selectedbeneficiary.set(foundbeneficiary ? foundbeneficiary : {} as Beneficiary);
+      const foundbeneficiary = this.recentBeneficiaries().find(
+        (b: any) => b.id === bId
+      );
+      this.selectedbeneficiary.set(
+        foundbeneficiary ? foundbeneficiary : undefined
+      );
     }
-  }
-
-  updateBeneficiary = (payload: Partial<Beneficiary>): void => {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer your-access-token'
-      })
-    };
-
-    this.http.patch<Partial<Beneficiary>>(`${this.url}/beneficiary/${payload.id}`, payload, httpOptions).pipe(
-      map((updatedB) => updatedB as Beneficiary),
-      shareReplay(1),
-      catchError(this.handleError)
-    ).subscribe();
   }
 
   createBeneficiary = (payload: Partial<Beneficiary>): void => {
@@ -68,44 +103,76 @@ export class BeneficiaryService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer your-access-token'
-      })
+      }),
     };
 
     if (this.hasMock) {
-      payload.addedDate = new Date().toISOString()
-      payload.updatedDate = new Date().toISOString()
-      payload.documents?.map(doc => {
+      payload.addedDate = new Date().toISOString();
+      payload.updatedDate = new Date().toISOString();
+      payload.documents?.map((doc) => {
         doc.addedDate = new Date().toISOString();
         doc.updatedDate = new Date().toISOString();
-      })
+      });
     }
 
-    payload.documents?.map((doc: Partial<Document>)  => delete doc.id);
+    payload.documents?.map((doc: Partial<Document>) => delete doc.id);
 
-    this.http.post<any>(`${this.url}/beneficiary`, payload, httpOptions).pipe(
-      map((response: Beneficiary) => response),
-      shareReplay(1),
-      takeUntilDestroyed(this.destroyRef),
-      catchError(this.handleError)
-    ).subscribe({
-      next: (data: Beneficiary) => this.beneficiarys().push(data)
-    });
+    this.http
+      .post<any>(`${this.url}/beneficiary`, payload, httpOptions)
+      .pipe(
+        map((response: Beneficiary) => response),
+        shareReplay(1),
+        takeUntilDestroyed(this.destroyRef),
+        catchError(this.handleError)
+      )
+      .subscribe(this.beneficiary.set);
+  };
 
-  }
+  updateBeneficiary = (payload: Partial<Beneficiary>): void => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer your-access-token'
+      }),
+    };
+
+    if (payload.id) {
+      this.http
+        .patch<Partial<Beneficiary>>(
+          `${this.url}/beneficiary/${payload.id}`,
+          payload,
+          httpOptions
+        )
+        .pipe(
+          map((updatedB) => updatedB),
+          distinctUntilChanged(),
+          shareReplay(1),
+          takeUntilDestroyed(this.destroyRef),
+          catchError(this.handleError)
+        )
+        .subscribe(this.beneficiary.set, this.selectedbeneficiary.set);
+    }
+  };
+
+  public readonly recentBeneficiaries = toSignal(
+    toObservable(this.beneficiary).pipe(
+      // filterNullish<any>(),
+      switchMap(() => this.getBeneficiaries())
+    ),
+    { initialValue: [], manualCleanup: true }
+  );
 
   removeBeneficiaryById = (bId: string | undefined) => {
-    this.http.delete<any>(`${this.url}/beneficiary/${bId}`).pipe(
-      map((response: any) => response),
-      shareReplay(1),
-      takeUntilDestroyed(this.destroyRef),
-      catchError(this.handleError),
-    ).subscribe({
-      next: () => {
-        this.beneficiarys = signal(this.beneficiarys().filter(b => b.id !== bId));
-        this.selectedbeneficiary.set({} as Beneficiary);
-      }
-    });
-  }
+    this.http
+      .delete<any>(`${this.url}/beneficiary/${bId}`)
+      .pipe(
+        map((response: any) => response),
+        shareReplay(1),
+        takeUntilDestroyed(this.destroyRef),
+        catchError(this.handleError)
+      )
+      .subscribe(this.beneficiary.set);
+  };
 
   private handleError(err: HttpErrorResponse): Observable<never> {
     // In a real world app we Should centralize error and calls on HTTPInterceptors
@@ -124,75 +191,69 @@ export class BeneficiaryService {
     return throwError(() => errorMessage);
   }
 
+  inputControlsBeneficiary = signal<InputControls[]>([
+    {
+      type: 'text',
+      id: 'id',
+      className: '',
+      label: '',
+    },
+    {
+      type: 'text',
+      id: 'name',
+      className: '',
+      label: 'Nome',
+    },
+    {
+      type: 'tel',
+      id: 'phone',
+      className: '',
+      label: 'Telefone',
+    },
+    {
+      type: 'date',
+      id: 'birthDate',
+      className: '',
+      label: 'Nascimento',
+    },
+    {
+      type: 'date',
+      id: 'addedDate',
+      className: '',
+      label: 'Inclusão',
+    },
+    {
+      type: 'date',
+      id: 'updatedDate',
+      className: '',
+      label: 'Atualizado em',
+    },
+  ]);
 
-  inputControlsBeneficiary = signal<InputControls[]>(
-    [
-      {
-        type: 'text',
-        id: 'id',
-        className: '',
-        label: '',
-      },
-      {
-        type: 'text',
-        id: 'name',
-        className: '',
-        label: 'Nome',
-      },
-      {
-        type: 'tel',
-        id: 'phone',
-        className: '',
-        label: 'Telefone',
-      },
-      {
-        type: 'date',
-        id: 'birthDate',
-        className: '',
-        label: 'Nascimento',
-      },
-      {
-        type: 'date',
-        id: 'addedDate',
-        className: '',
-        label: 'Inclusão',
-      },
-      {
-        type: 'date',
-        id: 'updatedDate',
-        className: '',
-        label: 'Atualizado em',
-      },
-    ]
-  )
-
-  inputControlsDocs = signal<InputControlDocuments[]>(
-    [
-      {
-        type: 'text',
-        idDoc: 'documentType',
-        className: '',
-        label: 'Tipo',
-      },
-      {
-        type: 'textarea',
-        idDoc: 'desc',
-        className: '',
-        label: 'Descrição',
-      },
-      {
-        type: 'date',
-        idDoc: 'addedDate',
-        className: '',
-        label: 'Data Inclusão',
-      },
-      {
-        type: 'date',
-        idDoc: 'updatedDate',
-        className: '',
-        label: 'Data Atualização',
-      },
-    ]
-  )
-
+  inputControlsDocs = signal<InputControlDocuments[]>([
+    {
+      type: 'text',
+      idDoc: 'documentType',
+      className: '',
+      label: 'Tipo',
+    },
+    {
+      type: 'textarea',
+      idDoc: 'desc',
+      className: '',
+      label: 'Descrição',
+    },
+    {
+      type: 'date',
+      idDoc: 'addedDate',
+      className: '',
+      label: 'Data Inclusão',
+    },
+    {
+      type: 'date',
+      idDoc: 'updatedDate',
+      className: '',
+      label: 'Data Atualização',
+    },
+  ]);
 }

@@ -21,4 +21,6 @@ import { NgIf } from '@angular/common';
 })
 export class BeneficiaryShellComponent {
 
+  constructor() {
+  }
 }

@@ -1,7 +1,6 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
   AfterContentInit,
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -26,7 +25,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
   imports: [NgClass, NgFor, NgIf, FormsModule, NgxMaskDirective, NgxMaskPipe],
   providers: [provideNgxMask()],
   styleUrls: ['./dialog.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent implements AfterContentInit {
   constructor() {}
@@ -67,14 +66,13 @@ export class DialogComponent implements AfterContentInit {
   addAccordeon: EventEmitter<any> = new EventEmitter();
 
   ngAfterContentInit(): void {
-    console.log('entrei no dialog: ');
     this.addControls(this.dialogForm);
   }
 
-  addAccordeonElement = (): void =>
-    this.addAccordeon.emit();
+  addAccordeonElement = (): void => this.addAccordeon.emit();
 
-  updateDialogFormValue = (keyControl: string, value: any) => this.dialogForm.get(keyControl)?.setValue(value);
+  updateDialogFormValue = (keyControl: string, value: any) =>
+    this.dialogForm.get(keyControl)?.setValue(value);
 
   addControls(formInstance: FormGroup): void {
     this.controls().map((inputControl) => {

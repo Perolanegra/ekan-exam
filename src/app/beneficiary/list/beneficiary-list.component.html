@@ -4,17 +4,17 @@
     <button
       [disabled]="showModalAdd()"
       class="pseudo-clicker"
-      (click)="onSelected('none'); showModalAdd.set(true)"
+      (click)="onSelected(''); showModalAdd.set(true)"
     ></button>
   </div>
 
-  <div class="card-body" *ngIf="bService.beneficiarys()?.length">
+  <div class="card-body" *ngIf="bService.recentBeneficiaries()?.length">
     <div class="list-group">
       <button
         [disabled]="showModalAdd()"
         type="button"
         class="list-group-item"
-        *ngFor="let b of bService.beneficiarys()"
+        *ngFor="let b of bService.recentBeneficiaries()"
         [ngClass]="{ active: b?.name === selectedBeneficiary().name }"
         (click)="onSelected(b.id)"
       >

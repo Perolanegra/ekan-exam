@@ -76,22 +76,5 @@
       }
     ]
   },
-  "beneficiary": [
-    {
-      "name": "Igor Alves Da Silva",
-      "phone": "61982856543",
-      "birthDate": "2023-11-29",
-      "documents": [
-        {
-          "documentType": "x",
-          "desc": "d",
-          "addedDate": "2023-12-06T18:16:52.762Z",
-          "updatedDate": "2023-12-06T18:16:52.762Z"
-        }
-      ],
-      "addedDate": "2023-12-06T18:16:52.762Z",
-      "updatedDate": "2023-12-06T18:16:52.762Z",
-      "id": 1
-    }
-  ]
+  "beneficiary": []
 }

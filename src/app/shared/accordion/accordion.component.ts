@@ -24,7 +24,7 @@ import {
   standalone: true,
   imports: [NgClass, NgFor, NgIf, FormsModule],
   styleUrls: ['./accordion.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionComponent implements AfterContentInit {
   private renderer = inject(Renderer2);
@@ -48,8 +48,7 @@ export class AccordionComponent implements AfterContentInit {
   accordeonControlName!: string;
 
   ngAfterContentInit(): void {
-    console.log('entrei no acc');
-    this.addControls(this.accordeonForm);
+    if (this.selectedData?.length) this.addControls(this.accordeonForm);
   }
 
   addControls(formInstance: FormGroup): void {
@@ -70,7 +69,7 @@ export class AccordionComponent implements AfterContentInit {
       this.items?.push(new FormControl(newDoc, Validators.required));
     });
 
-    this.items?.setErrors({ incorrect: true });
+    this.addMode ? this.items?.setErrors({ incorrect: true }) : '';
   }
 
   get items() {

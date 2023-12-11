@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { BeneficiaryService } from '../beneficiary.service';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
@@ -26,6 +32,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     NgxMaskDirective,
     NgxMaskPipe,
   ],
+  // providers: [BeneficiaryService],
   templateUrl: './beneficiary-list.component.html',
   styles: [
     `
@@ -54,7 +61,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
       }
     `,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BeneficiaryListComponent {
   pageTitle = 'Beneficiários';
@@ -72,7 +79,7 @@ export class BeneficiaryListComponent {
   // Component signals
   beneficiaries = computed(() => {
     try {
-      return this.bService.beneficiarys();
+      return this.bService.recentBeneficiaries();
     } catch (e) {
       this.errorMessage = typeof e === 'string' ? e : 'Error';
       return [];
@@ -82,16 +89,11 @@ export class BeneficiaryListComponent {
   // When a beneficiary is selected, emit the selected beneficiary name if it goes to detail
   onSelected(bID: string): void {
     if (bID) {
-      if (bID === 'none') {
-        this.disableAccBtn = false;
-        this.selectedBeneficiary().documents = [];
-        this.availableNumbers = Array.from(
-          { length: 30 },
-          (_, index) => index + 1
-        );
-      }
       this.bService.beneficiarySelected(bID as string);
     }
+    
+    this.disableAccBtn = false;
+    this.availableNumbers = Array.from({ length: 30 }, (_, index) => index + 1);
   }
 
   availableNumbers!: number[];
