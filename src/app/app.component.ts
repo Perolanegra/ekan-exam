@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, LOCALE_ID, inject } from '@angular/
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import localePt from '@angular/common/locales/pt';
+import { BeneficiaryService } from './beneficiary/beneficiary.service';
 
 registerLocaleData(localePt);
 
@@ -18,4 +19,5 @@ registerLocaleData(localePt);
 })
 export class AppComponent {
   pageTitle = 'Avaliação';
+  bService = inject(BeneficiaryService);
 }

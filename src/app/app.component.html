@@ -4,7 +4,11 @@
   >
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active"
+      <a
+        class="nav-link"
+        (click)="bService.beneficiarySelected('none')"
+        [routerLink]="['/home']"
+        routerLinkActive="active"
         >Início</a
       >
     </li>

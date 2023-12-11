@@ -7,6 +7,7 @@ import {
   WritableSignal,
   AfterContentInit,
   ChangeDetectionStrategy,
+  Signal,
 } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
@@ -57,7 +58,7 @@ export class AccordionComponent implements AfterContentInit {
       new FormArray([], Validators.required)
     );
 
-    this.selectedData?.map((doc) => {
+    this.selectedData?.map((doc: any) => {
       const newDoc: any = {};
 
       Object.keys(doc)?.forEach((key) => {

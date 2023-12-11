@@ -65,7 +65,6 @@ export class BeneficiaryDetailComponent {
 
   // Signals used in the template
   selectedBeneficiary = this.beneficiaryService.selectedbeneficiary;
-  beneficiaryDocuments = this.beneficiaryService.beneficiaryDocuments;
   inputControls = this.beneficiaryService.inputControlsBeneficiary;
   controlsDoc = this.beneficiaryService.inputControlsDocs;
   controlsToRemove = ['addedDate', 'updatedDate'];
@@ -79,7 +78,6 @@ export class BeneficiaryDetailComponent {
   onSubmit(formInstance: FormGroup): void {
     if (formInstance.valid) {
       this.showModal.set(false);
-      this.selectedBeneficiary.set(formInstance.value);
       this.beneficiaryService.updateBeneficiary(formInstance.value);
     }
   }
@@ -87,7 +85,6 @@ export class BeneficiaryDetailComponent {
   removeBeneficiary(idBeneficiary: string | undefined): void {
     if (idBeneficiary) {
       this.beneficiaryService.removeBeneficiaryById(idBeneficiary);
-      this.selectedBeneficiary.set({} as Beneficiary);
     }
   }
 }

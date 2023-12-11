@@ -88,10 +88,7 @@ export class BeneficiaryListComponent {
 
   // When a beneficiary is selected, emit the selected beneficiary name if it goes to detail
   onSelected(bID: string): void {
-    if (bID) {
-      this.bService.beneficiarySelected(bID as string);
-    }
-    
+    this.bService.beneficiarySelected(bID as string);
     this.disableAccBtn = false;
     this.availableNumbers = Array.from({ length: 30 }, (_, index) => index + 1);
   }

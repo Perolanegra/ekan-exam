@@ -3,19 +3,12 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import {
-  DestroyRef,
-  EventEmitter,
-  Injectable,
-  inject,
-  signal,
-} from '@angular/core';
+import { DestroyRef, Injectable, inject, signal } from '@angular/core';
 import {
   catchError,
   filter,
   map,
   Observable,
-  of,
   shareReplay,
   switchMap,
   throwError,
@@ -23,7 +16,7 @@ import {
   UnaryFunction,
   pipe,
   distinctUntilChanged,
-  BehaviorSubject,
+  of,
 } from 'rxjs';
 import {
   toSignal,
@@ -66,8 +59,26 @@ export class BeneficiaryService {
   private destroyRef = inject(DestroyRef);
   private hasMock = true;
 
-  public readonly beneficiary = signal<any>({} as Beneficiary);
-  public readonly selectedbeneficiary = signal<any>({} as Beneficiary);
+  private readonly beneficiary = signal<any>({} as Beneficiary);
+  private readonly _selectedbeneficiary = signal<any>({} as Beneficiary);
+
+  public readonly recentBeneficiaries = toSignal(
+    toObservable(this.beneficiary).pipe(
+      // filterNullish<any>(),
+      switchMap(() => this.getBeneficiaries())
+    ),
+    { initialValue: [], manualCleanup: true }
+  );
+
+  public readonly selectedbeneficiary = toSignal(
+    toObservable(this._selectedbeneficiary).pipe(
+      distinctUntilChanged(),
+      filterNullish<any>(),
+      // takeUntilDestroyed(this.destroyRef),
+      switchMap((foundbeneficiary: Beneficiary) => of(foundbeneficiary))
+    ),
+    { initialValue: {} as Beneficiary, manualCleanup: true }
+  );
 
   getBeneficiaries(): Observable<any> {
     return this.http.get<Beneficiary[]>(`${this.url}/beneficiary`).pipe(
@@ -77,24 +88,12 @@ export class BeneficiaryService {
     );
   }
 
-  private beneficiaryDocuments$ = toObservable(this.selectedbeneficiary).pipe(
-    filter(Boolean),
-    switchMap((beneficiary) => of(beneficiary.documents))
-  );
-
-  beneficiaryDocuments = toSignal<Document[], Document[]>(
-    this.beneficiaryDocuments$,
-    { initialValue: [] }
-  );
-
   beneficiarySelected(bId: string): void {
     if (bId) {
       const foundbeneficiary = this.recentBeneficiaries().find(
         (b: any) => b.id === bId
       );
-      this.selectedbeneficiary.set(
-        foundbeneficiary ? foundbeneficiary : undefined
-      );
+      this._selectedbeneficiary.set(foundbeneficiary ? foundbeneficiary : {});
     }
   }
 
@@ -150,17 +149,14 @@ export class BeneficiaryService {
           takeUntilDestroyed(this.destroyRef),
           catchError(this.handleError)
         )
-        .subscribe(this.beneficiary.set, this.selectedbeneficiary.set);
+        .subscribe({
+          next: (data: any) => {
+            this.beneficiary.set(data);
+            this._selectedbeneficiary.set(data);
+          },
+        });
     }
   };
-
-  public readonly recentBeneficiaries = toSignal(
-    toObservable(this.beneficiary).pipe(
-      // filterNullish<any>(),
-      switchMap(() => this.getBeneficiaries())
-    ),
-    { initialValue: [], manualCleanup: true }
-  );
 
   removeBeneficiaryById = (bId: string | undefined) => {
     this.http
@@ -171,7 +167,12 @@ export class BeneficiaryService {
         takeUntilDestroyed(this.destroyRef),
         catchError(this.handleError)
       )
-      .subscribe(this.beneficiary.set);
+      .subscribe({
+        next: (data: any) => {
+          this.beneficiary.set(data);
+          this._selectedbeneficiary.set({} as Beneficiary);
+        },
+      });
   };
 
   private handleError(err: HttpErrorResponse): Observable<never> {

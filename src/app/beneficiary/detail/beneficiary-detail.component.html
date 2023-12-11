@@ -2,7 +2,7 @@
   <div class="card-header">
     {{ pageTitle() }}
     <div
-      (click)="removeBeneficiary(selectedBeneficiary()?.id)"
+      (click)="removeBeneficiary(selectedBeneficiary().id)"
       class="remove-icon"
       alt="Remove Icon"
     ></div>
@@ -11,7 +11,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-3">Nome:</div>
-      <div class="col-md-6">{{ selectedBeneficiary()?.name }}</div>
+      <div class="col-md-6">{{ selectedBeneficiary().name }}</div>
       <div class="col-md-3">
         <button
           [disabled]="showModal()"
@@ -25,29 +25,29 @@
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Telefone:</div>
       <div class="col-md-6">
-        {{ (selectedBeneficiary())?.phone | mask : "(00) 0 0000-0000" }}
+        {{ selectedBeneficiary().phone | mask : "(00) 0 0000-0000" }}
       </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Nascimento:</div>
       <div class="col-md-6">
-        {{ selectedBeneficiary()?.birthDate | date : "short" : "" : "pt-BR" }}
+        {{ selectedBeneficiary().birthDate | date : "short" : "" : "pt-BR" }}
       </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Inclusão em:</div>
       <div class="col-md-6">
-        {{ selectedBeneficiary()?.addedDate | date : "short" : "" : "pt-BR" }}
+        {{ selectedBeneficiary().addedDate | date : "short" : "" : "pt-BR" }}
       </div>
     </div>
     <div class="row mt-1 mb-1">
       <div class="col-md-3">Atualizado em:</div>
       <div class="col-md-6">
-        {{ selectedBeneficiary()?.updatedDate | date : "short" : "" : "pt-BR" }}
+        {{ selectedBeneficiary().updatedDate | date : "short" : "" : "pt-BR" }}
       </div>
     </div>
 
-    <div class="row mt-2 mb-1" *ngIf="beneficiaryDocuments()">
+    <div class="row mt-2 mb-1" *ngIf="selectedBeneficiary()?.documents">
       <div class="col-md-3">Documentos:</div>
       <div class="col-md-6 box-docs">
         <ul
@@ -92,13 +92,13 @@
       (canceled)="showModal.set(false)"
     >
       <app-accordion
-      [controlsDoc]="controlsDoc"
-      [accordeonForm]="editBeneficiaryForm.form"
-      [readOnlyControls]="controlsToRemove"
-      [selectedData]="selectedBeneficiary()?.documents"
-      accordeonControlName='documents'
+        [controlsDoc]="controlsDoc"
+        [accordeonForm]="editBeneficiaryForm.form"
+        [readOnlyControls]="controlsToRemove"
+        [selectedData]="selectedBeneficiary().documents"
+        accordeonControlName="documents"
       >
-    </app-accordion>
+      </app-accordion>
     </app-dialog>
   </form>
 </ng-container>

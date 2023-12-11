@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  Signal,
   WritableSignal,
   signal,
 } from '@angular/core';
@@ -39,7 +40,7 @@ export class DialogComponent implements AfterContentInit {
   controls!: WritableSignal<InputControls[]>;
 
   @Input()
-  selectedData!: WritableSignal<any>;
+  selectedData!: Signal<any>;
 
   @Input()
   addMode: boolean = false;
