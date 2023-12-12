@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   inject,
@@ -8,6 +8,7 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Signal,
+  signal,
 } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
@@ -18,12 +19,13 @@ import {
   FormsModule,
   Validators,
 } from '@angular/forms';
+import { Observable, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-accordion',
   templateUrl: './accordion.component.html',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, FormsModule],
+  imports: [NgClass, NgFor, NgIf, FormsModule, AsyncPipe],
   styleUrls: ['./accordion.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -43,13 +45,13 @@ export class AccordionComponent implements AfterContentInit {
   readOnlyControls!: string[];
 
   @Input()
-  selectedData!: any[];
+  selectedData = signal<any[]>([]);
 
   @Input()
   accordeonControlName!: string;
 
   ngAfterContentInit(): void {
-    if (this.selectedData?.length) this.addControls(this.accordeonForm);
+    if (!this.addMode) this.addControls(this.accordeonForm);
   }
 
   addControls(formInstance: FormGroup): void {
@@ -58,19 +60,16 @@ export class AccordionComponent implements AfterContentInit {
       new FormArray([], Validators.required)
     );
 
-    this.selectedData?.map((doc: any) => {
-      const newDoc: any = {};
+    const newDoc: any = {};
 
-      Object.keys(doc)?.forEach((key) => {
-        if (!this.readOnlyControls.includes(key)) {
-          newDoc[key] = doc[key];
-        }
+    this.selectedData().map((doc: any) => {
+      Object.keys(doc).forEach((key: any) => {
+        newDoc[key] = doc[key] || '';
       });
-
       this.items?.push(new FormControl(newDoc, Validators.required));
     });
 
-    this.addMode ? this.items?.setErrors({ incorrect: true }) : '';
+    this.items?.setErrors({ incorrect: true });
   }
 
   get items() {
@@ -78,28 +77,24 @@ export class AccordionComponent implements AfterContentInit {
   }
 
   setErrorState(index: number): void {
-    ((this.items as FormArray).value as []).map((inputControls) => {
+    ((this.items as FormArray)?.value as [])?.map((inputControls) => {
       Object?.keys(inputControls).forEach((inputKey) => {
         if (!this.items.value[index][inputKey]) {
           // engloba valores falsos e a a ausencia da prop em um novo indice
-          this.items.setErrors({ incorrect: true });
+          this.items?.setErrors({ incorrect: true });
         }
       });
     });
   }
 
-  updateFormValue = (keyControl: string, value: any, index: number) => {
+  updateFormValue = (keyControl: string, value: any, index: string) => {
     const valueToSpread = { [keyControl]: value };
 
-    if (this.items.at(index)) {
-      this.items
-        .at(index)
-        ?.setValue({ ...this.items.value[index], ...valueToSpread });
-    } else {
-      this.items.push(valueToSpread);
-    }
+    this.items
+      ?.get(index)
+      ?.setValue({ ...this.items.value[index], ...valueToSpread });
 
-    this.setErrorState(index);
+    this.setErrorState(+index);
   };
 
   toggleAccordion(doc: Document, isClosing?: boolean): void {

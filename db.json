@@ -76,5 +76,39 @@
       }
     ]
   },
-  "beneficiary": []
+  "beneficiary": [
+    {
+      "name": "Gabriel Silva ss",
+      "phone": "61982803693",
+      "birthDate": "2023-12-08",
+      "documents": [
+        {
+          "documentType": "xasdas",
+          "desc": "23242",
+          "addedDate": "2023-12-12T11:14:02.584Z",
+          "updatedDate": "2023-12-12T11:14:02.584Z"
+        }
+      ],
+      "addedDate": "2023-12-12T11:14:02.584Z",
+      "updatedDate": "2023-12-12T11:14:02.584Z",
+      "id": 2
+    },
+    {
+      "name": "Igor Silva",
+      "phone": "61982856543",
+      "birthDate": "2023-12-06",
+      "documents": [
+        {
+          "documentType": "d",
+          "desc": "x",
+          "showAccordeon": true,
+          "addedDate": "2023-12-12T12:12:18.864Z",
+          "updatedDate": "2023-12-12T12:12:18.864Z"
+        }
+      ],
+      "addedDate": "2023-12-12T12:12:18.864Z",
+      "updatedDate": "2023-12-12T12:12:18.864Z",
+      "id": 3
+    }
+  ]
 }

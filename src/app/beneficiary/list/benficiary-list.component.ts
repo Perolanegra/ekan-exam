@@ -18,6 +18,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'beneficiary-list',
@@ -68,6 +70,7 @@ export class BeneficiaryListComponent {
   controlsToRemove = ['addedDate', 'updatedDate', 'id'];
   bService = inject(BeneficiaryService);
   showModalAdd = signal(false);
+  docsToCreate = signal<Partial<Document>[]>([]);
   showAccordeon = false;
 
   controlsDoc = this.bService.inputControlsDocs;
@@ -95,7 +98,14 @@ export class BeneficiaryListComponent {
   availableNumbers!: number[];
 
   addDocuments(formInstance: FormGroup): void {
-    this.showAccordeon = true;
+    if (!this.showAccordeon && !formInstance.controls['documents']) {
+      formInstance?.addControl(
+        'documents',
+        new FormArray([], Validators.required)
+      );
+      this.showAccordeon = true;
+    }
+
     // It was set on frontend the amount of documents a beneficiary can have
     if (this.availableNumbers.length === 0) {
       this.disableAccBtn = true;
@@ -107,28 +117,36 @@ export class BeneficiaryListComponent {
     );
     const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
 
-    const docRef = Object.create({} as Document);
-    [
-      'id',
-      'documentType',
-      'desc',
-    ].map((key) => docRef[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '');
+    const docRef: Partial<Document> = Object.create({} as Document);
+    ['id', 'documentType', 'desc'].map(
+      (key) =>
+        ((docRef as any)[key] =
+          key === 'id' ? `doc-ref${randomUniqueNumber}` : '')
+    );
 
-    const ref = this.selectedBeneficiary().documents;
-    this.selectedBeneficiary().documents = ref && ref.length ? [...ref, docRef] : [docRef];
+    this.docsToCreate.update(docs => [ ...docs, ...[docRef] ]);
 
     (formInstance?.controls['documents'] as FormArray)?.push(
-      new FormControl(null, Validators.required)
+      new FormControl(docRef, Validators.required)
     );
   }
 
   onSubmit(formInstance: FormGroup): void {
-    console.log('ok submnit: ', formInstance.value);
-
     if (formInstance.valid) {
-      this.showModalAdd.set(false);
-      this.showAccordeon = true;
+      this.resetComponentState(formInstance.reset, [], true, false);
       this.bService.createBeneficiary(formInstance.value);
     }
+  }
+
+  resetComponentState(
+    doAnyFunc: any,
+    docsToCreate: any[],
+    showAccordeon: boolean,
+    showModalAdd: boolean
+  ) {
+    doAnyFunc();
+    this.docsToCreate.set(docsToCreate);
+    this.showAccordeon = showAccordeon;
+    this.showModalAdd.set(showModalAdd);
   }
 }

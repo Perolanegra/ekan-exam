@@ -44,7 +44,7 @@
       [readOnlyControls]="controlsToRemove"
       headerText="Cadastrar Beneficiário"
       [addMode]="true"
-      (canceled)="showModalAdd.set(false); showAccordeon = false"
+      (canceled)="resetComponentState(showModalAdd, [], false, false)"
       (addAccordeon)="addDocuments(inputBeneficiaryForm.form)"
     >
       <ng-container *ngIf="showAccordeon">
@@ -52,7 +52,7 @@
           [controlsDoc]="controlsDoc"
           [accordeonForm]="inputBeneficiaryForm.form"
           [readOnlyControls]="controlsToRemove"
-          [selectedData]="selectedBeneficiary().documents"
+          [selectedData]="docsToCreate"
           accordeonControlName='documents'
           [addMode]="true"
         ></app-accordion>
