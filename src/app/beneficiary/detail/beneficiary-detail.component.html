@@ -79,6 +79,7 @@
 <ng-container *ngIf="showModal()">
   <form
     #editBeneficiaryForm="ngForm"
+    id="editBForm"
     (ngSubmit)="onSubmit(editBeneficiaryForm.form)"
     novalidate
   >

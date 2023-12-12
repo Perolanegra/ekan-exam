@@ -53,7 +53,7 @@ export class BeneficiaryService {
   private url = 'http://localhost:3000';
   http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
-  private hasMock = true;
+  public hasMock = true;
 
   private readonly beneficiary = signal<any>({} as Beneficiary);
   private readonly _selectedbeneficiary = signal<any>({} as Beneficiary);
@@ -101,9 +101,9 @@ export class BeneficiaryService {
         doc.addedDate = new Date().toISOString();
         doc.updatedDate = new Date().toISOString();
       });
+    } else {
+      payload.documents?.map((doc: Partial<Document>) => delete doc.id);
     }
-
-    payload.documents?.map((doc: Partial<Document>) => delete doc.id);
 
     this.http
       .post<any>(`${this.url}/beneficiary`, payload)

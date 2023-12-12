@@ -122,6 +122,7 @@ export class BeneficiaryListComponent {
 
   onSubmit(formInstance: FormGroup): void {
     if (formInstance.valid) {
+      formInstance.value.documents?.map((doc: Partial<Document>) => delete doc.showAccordeon);
       this.bService.createBeneficiary(formInstance.value);
       this.resetComponentState([], true, false);
       formInstance.reset();

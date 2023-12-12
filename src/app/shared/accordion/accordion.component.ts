@@ -8,6 +8,7 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Signal,
+  OnDestroy,
 } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
@@ -27,7 +28,7 @@ import {
   styleUrls: ['./accordion.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccordionComponent implements AfterContentInit {
+export class AccordionComponent implements AfterContentInit, OnDestroy {
   private renderer = inject(Renderer2);
 
   @Input()
@@ -47,6 +48,10 @@ export class AccordionComponent implements AfterContentInit {
 
   ngAfterContentInit(): void {
     if (!this.addMode) this.addControls(this.accordeonForm);
+  }
+
+  ngOnDestroy(): void {
+    this.selectedData().map(item => delete item.showAccordeon);
   }
 
   addControls(formInstance: FormGroup): void {
@@ -92,7 +97,7 @@ export class AccordionComponent implements AfterContentInit {
     this.setErrorState(+index);
   };
 
-  toggleAccordion(doc: Document, isClosing?: boolean): void {
+  toggleAccordion(doc: Document): void {
     doc.showAccordeon = doc.showAccordeon ?? false;
     doc.showAccordeon = !doc.showAccordeon;
 
@@ -132,7 +137,6 @@ export class AccordionComponent implements AfterContentInit {
     setTimeout(() => {
       this.renderer.setStyle(modalBody, 'pointer-events', 'unset');
       this.renderer.setStyle(modalBody, 'cursor', 'unset');
-      if (isClosing) delete doc.showAccordeon;
     }, 800);
   }
 }

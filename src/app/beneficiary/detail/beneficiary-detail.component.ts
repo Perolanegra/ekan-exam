@@ -1,4 +1,3 @@
-import { toSignal } from '@angular/core/rxjs-interop';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,6 +12,7 @@ import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { Subject, of } from 'rxjs';
+import { Document } from '../model/beneficiary';
 
 @Component({
   selector: 'beneficiary-detail',
@@ -91,4 +91,5 @@ export class BeneficiaryDetailComponent {
       this.beneficiaryService.removeBeneficiaryById(idBeneficiary);
     }
   }
+
 }

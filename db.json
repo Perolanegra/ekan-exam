@@ -76,40 +76,5 @@
       }
     ]
   },
-  "beneficiary": [
-    {
-      "name": "Igor Silva",
-      "phone": "61982856543",
-      "birthDate": "2023-12-06",
-      "documents": [
-        {
-          "documentType": "d",
-          "desc": "x",
-          "showAccordeon": true,
-          "addedDate": "2023-12-12T12:12:18.864Z",
-          "updatedDate": "2023-12-12T12:12:18.864Z"
-        }
-      ],
-      "addedDate": "2023-12-12T12:12:18.864Z",
-      "updatedDate": "2023-12-12T12:12:18.864Z",
-      "id": 3
-    },
-    {
-      "name": "Felipe",
-      "phone": "61982803693",
-      "birthDate": "2023-12-20",
-      "documents": [
-        {
-          "documentType": "das",
-          "desc": "xes",
-          "showAccordeon": true,
-          "addedDate": "2023-12-12T14:14:10.344Z",
-          "updatedDate": "2023-12-12T14:14:10.344Z"
-        }
-      ],
-      "addedDate": "2023-12-12T14:14:10.344Z",
-      "updatedDate": "2023-12-12T14:14:10.344Z",
-      "id": 4
-    }
-  ]
+  "beneficiary": []
 }
