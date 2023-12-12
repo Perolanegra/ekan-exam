@@ -1,7 +1,6 @@
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpHeaders,
 } from '@angular/common/http';
 import { DestroyRef, Injectable, inject, signal } from '@angular/core';
 import {
@@ -98,12 +97,12 @@ export class BeneficiaryService {
   }
 
   createBeneficiary = (payload: Partial<Beneficiary>): void => {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer your-access-token'
-      }),
-    };
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     // 'Authorization': 'Bearer your-access-token'
+    //   }),
+    // };
 
     if (this.hasMock) {
       payload.addedDate = new Date().toISOString();
@@ -117,7 +116,7 @@ export class BeneficiaryService {
     payload.documents?.map((doc: Partial<Document>) => delete doc.id);
 
     this.http
-      .post<any>(`${this.url}/beneficiary`, payload, httpOptions)
+      .post<any>(`${this.url}/beneficiary`, payload)
       .pipe(
         map((response: Beneficiary) => response),
         shareReplay(1),
@@ -128,19 +127,18 @@ export class BeneficiaryService {
   };
 
   updateBeneficiary = (payload: Partial<Beneficiary>): void => {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer your-access-token'
-      }),
-    };
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     // 'Authorization': 'Bearer your-access-token'
+    //   }),
+    // };
 
     if (payload.id) {
       this.http
         .patch<Partial<Beneficiary>>(
           `${this.url}/beneficiary/${payload.id}`,
           payload,
-          httpOptions
         )
         .pipe(
           map((updatedB) => updatedB),
