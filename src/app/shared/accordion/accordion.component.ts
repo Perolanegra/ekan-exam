@@ -90,9 +90,14 @@ export class AccordionComponent implements AfterContentInit {
 
   updateFormValue = (keyControl: string, value: any, index: number) => {
     const valueToSpread = { [keyControl]: value };
-    this.items
-      .at(index)
-      .setValue({ ...this.items.value[index], ...valueToSpread });
+
+    if (this.items.at(index)) {
+      this.items
+        .at(index)
+        ?.setValue({ ...this.items.value[index], ...valueToSpread });
+    } else {
+      this.items.push(valueToSpread);
+    }
 
     this.setErrorState(index);
   };

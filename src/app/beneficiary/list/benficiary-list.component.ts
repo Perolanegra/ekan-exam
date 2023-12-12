@@ -107,23 +107,15 @@ export class BeneficiaryListComponent {
     );
     const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
 
-    let docRef = Object.create({} as Document);
-    const documentKeys = [
+    const docRef = Object.create({} as Document);
+    [
       'id',
       'documentType',
       'desc',
-      'addedDate',
-      'updatedDate',
-    ];
-
-    documentKeys.map((key) => {
-      docRef[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '';
-      ('');
-      if (key.includes('Date')) delete docRef[key];
-    });
+    ].map((key) => docRef[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '');
 
     const ref = this.selectedBeneficiary().documents;
-    this.selectedBeneficiary().documents = ref ? [...ref, docRef] : [docRef];
+    this.selectedBeneficiary().documents = ref && ref.length ? [...ref, docRef] : [docRef];
 
     (formInstance?.controls['documents'] as FormArray)?.push(
       new FormControl(null, Validators.required)
@@ -131,6 +123,8 @@ export class BeneficiaryListComponent {
   }
 
   onSubmit(formInstance: FormGroup): void {
+    console.log('ok submnit: ', formInstance.value);
+
     if (formInstance.valid) {
       this.showModalAdd.set(false);
       this.showAccordeon = true;
