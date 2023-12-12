@@ -8,7 +8,6 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Signal,
-  signal,
 } from '@angular/core';
 import { Document } from '../../beneficiary/model/beneficiary';
 import { InputControlDocuments } from '../dialog/model/controls';
@@ -19,7 +18,6 @@ import {
   FormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-accordion',
@@ -40,9 +38,6 @@ export class AccordionComponent implements AfterContentInit {
 
   @Input()
   accordeonForm!: FormGroup;
-
-  @Input()
-  readOnlyControls!: string[];
 
   @Input()
   selectedData!: Signal<any[]>;

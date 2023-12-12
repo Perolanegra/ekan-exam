@@ -18,8 +18,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'beneficiary-list',
@@ -78,15 +76,6 @@ export class BeneficiaryListComponent {
   inputControls = this.bService.inputControlsBeneficiary;
   disableAccBtn: boolean = false;
 
-  // Component signals
-  beneficiaries = computed(() => {
-    try {
-      return this.bService.recentBeneficiaries();
-    } catch (e) {
-      this.errorMessage = typeof e === 'string' ? e : 'Error';
-      return [];
-    }
-  });
 
   // When a beneficiary is selected, emit the selected beneficiary name if it goes to detail
   onSelected(bID: string): void {

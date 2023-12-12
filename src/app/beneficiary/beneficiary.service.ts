@@ -1,7 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DestroyRef, Injectable, inject, signal } from '@angular/core';
 import {
   catchError,
@@ -63,7 +60,6 @@ export class BeneficiaryService {
 
   public readonly recentBeneficiaries = toSignal(
     toObservable(this.beneficiary).pipe(
-      // filterNullish<any>(),
       switchMap(() => this.getBeneficiaries())
     ),
     { initialValue: [], manualCleanup: true }
@@ -97,13 +93,6 @@ export class BeneficiaryService {
   }
 
   createBeneficiary = (payload: Partial<Beneficiary>): void => {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     // 'Authorization': 'Bearer your-access-token'
-    //   }),
-    // };
-
     if (this.hasMock) {
       payload.addedDate = new Date().toISOString();
       payload.updatedDate = new Date().toISOString();
@@ -128,18 +117,11 @@ export class BeneficiaryService {
   };
 
   updateBeneficiary = (payload: Partial<Beneficiary>): void => {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     // 'Authorization': 'Bearer your-access-token'
-    //   }),
-    // };
-
     if (payload.id) {
       this.http
         .patch<Partial<Beneficiary>>(
           `${this.url}/beneficiary/${payload.id}`,
-          payload,
+          payload
         )
         .pipe(
           map((updatedB) => updatedB),
