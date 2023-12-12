@@ -68,6 +68,7 @@ export class BeneficiaryListComponent {
   controlsToRemove = ['addedDate', 'updatedDate', 'id'];
   bService = inject(BeneficiaryService);
   showModalAdd = signal(false);
+  docsToCreate = signal<Partial<Document>[]>([]);
   showAccordeon = false;
 
   controlsDoc = this.bService.inputControlsDocs;
@@ -75,15 +76,6 @@ export class BeneficiaryListComponent {
   inputControls = this.bService.inputControlsBeneficiary;
   disableAccBtn: boolean = false;
 
-  // Component signals
-  beneficiaries = computed(() => {
-    try {
-      return this.bService.recentBeneficiaries();
-    } catch (e) {
-      this.errorMessage = typeof e === 'string' ? e : 'Error';
-      return [];
-    }
-  });
 
   // When a beneficiary is selected, emit the selected beneficiary name if it goes to detail
   onSelected(bID: string): void {
@@ -95,7 +87,14 @@ export class BeneficiaryListComponent {
   availableNumbers!: number[];
 
   addDocuments(formInstance: FormGroup): void {
-    this.showAccordeon = true;
+    if (!this.showAccordeon && !formInstance.controls['documents']) {
+      formInstance?.addControl(
+        'documents',
+        new FormArray([], Validators.required)
+      );
+      this.showAccordeon = true;
+    }
+
     // It was set on frontend the amount of documents a beneficiary can have
     if (this.availableNumbers.length === 0) {
       this.disableAccBtn = true;
@@ -107,28 +106,36 @@ export class BeneficiaryListComponent {
     );
     const randomUniqueNumber = this.availableNumbers.splice(randomIndex, 1)[0];
 
-    const docRef = Object.create({} as Document);
-    [
-      'id',
-      'documentType',
-      'desc',
-    ].map((key) => docRef[key] = key === 'id' ? `doc-ref${randomUniqueNumber}` : '');
+    const docRef: Partial<Document> = Object.create({} as Document);
+    ['id', 'documentType', 'desc'].map(
+      (key) =>
+        ((docRef as any)[key] =
+          key === 'id' ? `doc-ref${randomUniqueNumber}` : '')
+    );
 
-    const ref = this.selectedBeneficiary().documents;
-    this.selectedBeneficiary().documents = ref && ref.length ? [...ref, docRef] : [docRef];
+    this.docsToCreate.update(docs => [ ...docs, ...[docRef] ]);
 
     (formInstance?.controls['documents'] as FormArray)?.push(
-      new FormControl(null, Validators.required)
+      new FormControl(docRef, Validators.required)
     );
   }
 
   onSubmit(formInstance: FormGroup): void {
-    console.log('ok submnit: ', formInstance.value);
-
     if (formInstance.valid) {
-      this.showModalAdd.set(false);
-      this.showAccordeon = true;
+      formInstance.value.documents?.map((doc: Partial<Document>) => delete doc.showAccordeon);
       this.bService.createBeneficiary(formInstance.value);
+      this.resetComponentState([], true, false);
+      formInstance.reset();
     }
+  }
+
+  resetComponentState(
+    docsToCreate: any[],
+    showAccordeon: boolean,
+    showModalAdd: boolean
+  ) {
+    this.docsToCreate.set(docsToCreate);
+    this.showAccordeon = showAccordeon;
+    this.showModalAdd.set(showModalAdd);
   }
 }

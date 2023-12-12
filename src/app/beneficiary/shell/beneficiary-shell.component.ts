@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BeneficiaryListComponent } from '../list/benficiary-list.component';
 import { BeneficiaryDetailComponent } from '../detail/beneficiary-detail.component';
 import { NgIf } from '@angular/common';
+import { BeneficiaryService } from '../beneficiary.service';
 
 @Component({
   selector: 'beneficiary-shell',
@@ -12,11 +13,15 @@ import { NgIf } from '@angular/common';
         <beneficiary-list></beneficiary-list>
       </div>
       <div class="col-md-8">
-        <beneficiary-detail></beneficiary-detail>
+        <ng-container *ngIf="bService.selectedbeneficiary().documents?.length">
+          <beneficiary-detail></beneficiary-detail>
+        </ng-container>
       </div>
     </div>
   `,
   imports: [BeneficiaryListComponent, BeneficiaryDetailComponent, NgIf],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BeneficiaryShellComponent {}
+export class BeneficiaryShellComponent {
+  bService = inject(BeneficiaryService);
+}

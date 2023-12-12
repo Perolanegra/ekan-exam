@@ -31,6 +31,7 @@
 <ng-container *ngIf="showModalAdd()">
   <form
     #inputBeneficiaryForm="ngForm"
+    id="editBForm"
     (ngSubmit)="onSubmit(inputBeneficiaryForm.form)"
     novalidate
   >
@@ -44,15 +45,14 @@
       [readOnlyControls]="controlsToRemove"
       headerText="Cadastrar Beneficiário"
       [addMode]="true"
-      (canceled)="showModalAdd.set(false); showAccordeon = false"
+      (canceled)="resetComponentState([], false, false); inputBeneficiaryForm.form.reset();"
       (addAccordeon)="addDocuments(inputBeneficiaryForm.form)"
     >
       <ng-container *ngIf="showAccordeon">
         <app-accordion
           [controlsDoc]="controlsDoc"
           [accordeonForm]="inputBeneficiaryForm.form"
-          [readOnlyControls]="controlsToRemove"
-          [selectedData]="selectedBeneficiary().documents"
+          [selectedData]="docsToCreate"
           accordeonControlName='documents'
           [addMode]="true"
         ></app-accordion>

@@ -11,6 +11,8 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { Subject, of } from 'rxjs';
+import { Document } from '../model/beneficiary';
 
 @Component({
   selector: 'beneficiary-detail',
@@ -61,6 +63,7 @@ export class BeneficiaryDetailComponent {
   errorMessage = '';
   beneficiaryService = inject(BeneficiaryService);
   showModal = signal(false);
+  docsToCreate: Subject<any> = new Subject();
 
   // Signals used in the template
   selectedBeneficiary = this.beneficiaryService.selectedbeneficiary;
@@ -74,6 +77,8 @@ export class BeneficiaryDetailComponent {
       : ''
   );
 
+  documents = computed(() => this.selectedBeneficiary().documents);
+
   onSubmit(formInstance: FormGroup): void {
     if (formInstance.valid) {
       this.showModal.set(false);
@@ -86,4 +91,5 @@ export class BeneficiaryDetailComponent {
       this.beneficiaryService.removeBeneficiaryById(idBeneficiary);
     }
   }
+
 }

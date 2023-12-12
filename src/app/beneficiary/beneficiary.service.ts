@@ -1,7 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DestroyRef, Injectable, inject, signal } from '@angular/core';
 import {
   catchError,
@@ -53,17 +50,16 @@ export function filterNullish<T>(): UnaryFunction<
   providedIn: 'root',
 })
 export class BeneficiaryService {
-  private url = 'http://localhost:8080';
+  private url = 'http://localhost:3000';
   http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
-  private hasMock = false;
+  public hasMock = true;
 
   private readonly beneficiary = signal<any>({} as Beneficiary);
   private readonly _selectedbeneficiary = signal<any>({} as Beneficiary);
 
   public readonly recentBeneficiaries = toSignal(
     toObservable(this.beneficiary).pipe(
-      // filterNullish<any>(),
       switchMap(() => this.getBeneficiaries())
     ),
     { initialValue: [], manualCleanup: true }
@@ -97,23 +93,17 @@ export class BeneficiaryService {
   }
 
   createBeneficiary = (payload: Partial<Beneficiary>): void => {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     // 'Authorization': 'Bearer your-access-token'
-    //   }),
-    // };
-
     if (this.hasMock) {
       payload.addedDate = new Date().toISOString();
       payload.updatedDate = new Date().toISOString();
+
       payload.documents?.map((doc) => {
         doc.addedDate = new Date().toISOString();
         doc.updatedDate = new Date().toISOString();
       });
+    } else {
+      payload.documents?.map((doc: Partial<Document>) => delete doc.id);
     }
-
-    payload.documents?.map((doc: Partial<Document>) => delete doc.id);
 
     this.http
       .post<any>(`${this.url}/beneficiary`, payload)
@@ -127,18 +117,11 @@ export class BeneficiaryService {
   };
 
   updateBeneficiary = (payload: Partial<Beneficiary>): void => {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     // 'Authorization': 'Bearer your-access-token'
-    //   }),
-    // };
-
     if (payload.id) {
       this.http
         .patch<Partial<Beneficiary>>(
           `${this.url}/beneficiary/${payload.id}`,
-          payload,
+          payload
         )
         .pipe(
           map((updatedB) => updatedB),

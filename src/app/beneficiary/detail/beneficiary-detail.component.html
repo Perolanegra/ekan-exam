@@ -79,6 +79,7 @@
 <ng-container *ngIf="showModal()">
   <form
     #editBeneficiaryForm="ngForm"
+    id="editBForm"
     (ngSubmit)="onSubmit(editBeneficiaryForm.form)"
     novalidate
   >
@@ -91,14 +92,17 @@
       headerText="Atualizar Beneficiário"
       (canceled)="showModal.set(false)"
     >
+
+    <ng-container>
       <app-accordion
         [controlsDoc]="controlsDoc"
         [accordeonForm]="editBeneficiaryForm.form"
-        [readOnlyControls]="controlsToRemove"
-        [selectedData]="selectedBeneficiary().documents"
+        [selectedData]="documents"
         accordeonControlName="documents"
       >
       </app-accordion>
+    </ng-container>
+
     </app-dialog>
   </form>
 </ng-container>
