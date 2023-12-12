@@ -86,11 +86,12 @@ export class BeneficiaryListComponent {
   availableNumbers!: number[];
 
   addDocuments(formInstance: FormGroup): void {
-    if (!this.showAccordeon && !formInstance.controls['documents']) {
+    if (!formInstance.controls['documents']) {
       formInstance?.addControl(
         'documents',
         new FormArray([], Validators.required)
       );
+
       this.showAccordeon = true;
     }
 
