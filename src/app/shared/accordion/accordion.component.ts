@@ -51,7 +51,7 @@ export class AccordionComponent implements AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.selectedData().map(item => delete item.showAccordeon);
+    this.selectedData().map((item) => delete item.showAccordeon);
   }
 
   addControls(formInstance: FormGroup): void {
@@ -60,12 +60,13 @@ export class AccordionComponent implements AfterContentInit, OnDestroy {
       new FormArray([], Validators.required)
     );
 
-    const newDoc: any = {};
+    let newDoc: any = {};
 
     this.selectedData().map((doc: any) => {
       Object.keys(doc).forEach((key: any) => {
-        newDoc[key] = doc[key] || '';
+        newDoc = { ...newDoc, [key]: doc[key] };
       });
+
       this.items?.push(new FormControl(newDoc, Validators.required));
     });
 

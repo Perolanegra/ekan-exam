@@ -53,7 +53,7 @@ export class BeneficiaryService {
   private url = 'http://localhost:8080';
   http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
-  public hasMock = false;
+  private hasMock = false;
 
   private readonly beneficiary = signal<any>({} as Beneficiary);
   private readonly _selectedbeneficiary = signal<any>({} as Beneficiary);
@@ -101,12 +101,13 @@ export class BeneficiaryService {
         doc.addedDate = new Date().toISOString();
         doc.updatedDate = new Date().toISOString();
       });
-    } else {
-      payload.documents?.map((doc: Partial<Document>) => delete doc.id);
     }
 
+    payload.documents?.map((doc: any) => delete doc.id);
+    const { id, ...reqPayload } = payload;
+
     this.http
-      .post<any>(`${this.url}/beneficiary`, payload)
+      .post<any>(`${this.url}/beneficiary`, reqPayload)
       .pipe(
         map((response: Beneficiary) => response),
         shareReplay(1),

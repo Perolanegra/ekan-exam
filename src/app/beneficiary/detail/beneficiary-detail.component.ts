@@ -11,8 +11,7 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { Subject, of } from 'rxjs';
-import { Document } from '../model/beneficiary';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'beneficiary-detail',
