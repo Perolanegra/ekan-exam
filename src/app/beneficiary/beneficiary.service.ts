@@ -75,7 +75,7 @@ export class BeneficiaryService {
     { initialValue: {} as Beneficiary, manualCleanup: true }
   );
 
-  getBeneficiaries(): Observable<any> {
+  getBeneficiaries(): Observable<Beneficiary[]> {
     return this.http.get<Beneficiary[]>(`${this.url}/beneficiary`).pipe(
       map((data) => data as Beneficiary[]),
       shareReplay(1),
@@ -140,7 +140,7 @@ export class BeneficiaryService {
     }
   };
 
-  removeBeneficiaryById = (bId: string | undefined) => {
+  removeBeneficiaryById = (bId: string | undefined): void => {
     this.http
       .delete<any>(`${this.url}/beneficiary/${bId}`)
       .pipe(
