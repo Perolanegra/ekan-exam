@@ -45,7 +45,7 @@ export class AccordionComponent implements AfterContentInit {
   readOnlyControls!: string[];
 
   @Input()
-  selectedData = signal<any[]>([]);
+  selectedData!: Signal<any[]>;
 
   @Input()
   accordeonControlName!: string;

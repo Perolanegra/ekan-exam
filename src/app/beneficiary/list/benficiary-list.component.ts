@@ -133,18 +133,17 @@ export class BeneficiaryListComponent {
 
   onSubmit(formInstance: FormGroup): void {
     if (formInstance.valid) {
-      this.resetComponentState(formInstance.reset, [], true, false);
       this.bService.createBeneficiary(formInstance.value);
+      this.resetComponentState([], true, false);
+      formInstance.reset();
     }
   }
 
   resetComponentState(
-    doAnyFunc: any,
     docsToCreate: any[],
     showAccordeon: boolean,
     showModalAdd: boolean
   ) {
-    doAnyFunc();
     this.docsToCreate.set(docsToCreate);
     this.showAccordeon = showAccordeon;
     this.showModalAdd.set(showModalAdd);

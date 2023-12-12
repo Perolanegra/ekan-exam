@@ -1,3 +1,4 @@
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,7 +12,7 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AccordionComponent } from '../../shared/accordion/accordion.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 @Component({
   selector: 'beneficiary-detail',
@@ -76,7 +77,7 @@ export class BeneficiaryDetailComponent {
       : ''
   );
 
-  documents = signal(this.selectedBeneficiary().documents)
+  documents = computed(() => this.selectedBeneficiary().documents);
 
   onSubmit(formInstance: FormGroup): void {
     if (formInstance.valid) {

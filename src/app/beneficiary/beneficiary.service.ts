@@ -107,6 +107,7 @@ export class BeneficiaryService {
     if (this.hasMock) {
       payload.addedDate = new Date().toISOString();
       payload.updatedDate = new Date().toISOString();
+
       payload.documents?.map((doc) => {
         doc.addedDate = new Date().toISOString();
         doc.updatedDate = new Date().toISOString();

@@ -91,6 +91,8 @@
       headerText="Atualizar Beneficiário"
       (canceled)="showModal.set(false)"
     >
+
+    <ng-container>
       <app-accordion
         [controlsDoc]="controlsDoc"
         [accordeonForm]="editBeneficiaryForm.form"
@@ -99,6 +101,8 @@
         accordeonControlName="documents"
       >
       </app-accordion>
+    </ng-container>
+
     </app-dialog>
   </form>
 </ng-container>

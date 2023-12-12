@@ -44,7 +44,7 @@
       [readOnlyControls]="controlsToRemove"
       headerText="Cadastrar Beneficiário"
       [addMode]="true"
-      (canceled)="resetComponentState(showModalAdd, [], false, false)"
+      (canceled)="resetComponentState([], false, false)"
       (addAccordeon)="addDocuments(inputBeneficiaryForm.form)"
     >
       <ng-container *ngIf="showAccordeon">
